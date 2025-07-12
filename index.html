@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PANEL VIP</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <canvas id="particles"></canvas>
+        <div class="status-bar">
+            <span class="time">13:50</span>
+            <div class="status-icons">
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <span class="battery">78</span>
+                <i class="fas fa-battery-three-quarters"></i>
+            </div>
+        </div>
+        <div class="app-header">
+            <h1 class="app-title">HVH<span class="config-text">TEAM</span></h1>
+            <div class="app-subtitle">system game free fire touch smooth</div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon"></div>
+                <span class="section-title">CHỨC NĂNG</span>
+            </div>
+            <div class="feature-item" data-feature="config">
+                <div class="feature-content">
+                    <div class="feature-icon config-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <span class="feature-text">Config Settings</span>
+                </div>
+                <div class="toggle-switch" data-toggle="config">
+                    <div class="toggle-slider">
+                        <div class="slider-inner"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-item" data-feature="lux">
+                <div class="feature-content">
+                    <div class="feature-icon lux-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <span class="feature-text">Trợ Năng LUX</span>
+                </div>
+                <div class="toggle-switch" data-toggle="lux">
+                    <div class="toggle-slider">
+                        <div class="slider-inner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon"></div>
+                <span class="section-title">LUX SENSI</span>
+            </div>
+            <div class="sensi-note">
+                <i class="fas fa-info-circle"></i>
+                <span>Speed mod aotu touch view</span>
+            </div>
+            <div class="feature-item device-item">
+                <div class="feature-content">
+                    <div class="feature-icon device-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="device-info">
+                        <span class="feature-text">DEVICE:</span>
+                        <span class="device-model">CPH2237</span>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-item dropdown-item">
+                <div class="feature-content">
+                    <div class="feature-icon mode-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <span class="feature-text">Chế độ:</span>
+                </div>
+                <div class="dropdown" data-dropdown="mode">
+                    <div class="dropdown-selected">
+                        <span>Mượt Mà</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-item dropdown-item">
+                <div class="feature-content">
+                    <div class="feature-icon dpi-icon">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <span class="feature-text">DPI:</span>
+                </div>
+                <div class="dropdown" data-dropdown="dpi">
+                    <div class="dropdown-selected">
+                        <span>1.0x - Tiêu Chuẩn</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="activate-section">
+            <button class="activate-btn" id="activateBtn">
+                <span class="btn-text">LUX SENSI ACTIVE</span>
+                <div class="btn-glow"></div>
+                <div class="btn-ripple"></div>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
