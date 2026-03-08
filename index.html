@@ -1,122 +1,298 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANEL VIP</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
-</head>
+    <title>Chúc mừng ngày Quốc tế Phụ nữ 8/3</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap');
 
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        /* Hiệu ứng trái tim rơi */
+        .heart-bg {
+            position: absolute;
+            top: -10vh;
+            transform: translateY(0);
+            animation: fall linear infinite;
+            z-index: 1;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .card-container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 500px;
+            perspective: 1000px;
+        }
+
+        .card {
+            width: 100%;
+            height: auto;
+            min-height: 450px;
+            position: relative;
+            transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .card.open {
+            transform: rotateY(180deg);
+        }
+
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 30px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            text-align: center;
+        }
+
+        .front {
+            z-index: 2;
+        }
+
+        .back {
+            transform: rotateY(180deg);
+            background: rgba(255, 255, 255, 0.95);
+            color: #ff4757;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4em;
+            margin: 0 0 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .back h1 {
+            color: #ff4757;
+            text-shadow: none;
+            font-size: 3.5em;
+        }
+
+        p {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .click-hint {
+            margin-top: 40px;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.3);
+            padding: 12px 25px;
+            border-radius: 30px;
+            animation: pulse 1.5s infinite;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-play {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-play:hover {
+            transform: scale(1.1) rotate(10deg);
+            background: #ff6b81;
+        }
+
+        /* Hiệu ứng nổ pháo hoa nhỏ khi click */
+        .sparkle {
+            position: absolute;
+            background: radial-gradient(circle, #fff 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: explode 0.8s ease-out forwards;
+            z-index: 999;
+        }
+
+        @keyframes explode {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 60px; height: 60px; opacity: 0; }
+        }
+
+        .love-icon {
+            font-size: 60px;
+            margin-top: 20px;
+            animation: heartbeat 1.2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+    </style>
+</head>
 <body>
-    <div class="container">
-        <canvas id="particles"></canvas>
-        <div class="status-bar">
-            <span class="time">13:50</span>
-            <div class="status-icons">
-                <i class="fas fa-signal"></i>
-                <i class="fas fa-wifi"></i>
-                <span class="battery">78</span>
-                <i class="fas fa-battery-three-quarters"></i>
+
+    <!-- Nhạc nền -->
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/01/26/audio_9c08d5cd5e.mp3?filename=soft-romantic-piano-113596.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="btn-play" id="playBtn" title="Bật nhạc">🎵</button>
+
+    <div class="card-container">
+        <div class="card" id="greetingCard">
+            <div class="front">
+                <h1>Gửi Em... ❤️</h1>
+                <p>Nhân ngày mùng 8/3, anh có một món quà nhỏ bất ngờ dành cho em.</p>
+                <div class="click-hint">Chạm vào thiệp để mở nhé ✨</div>
             </div>
-        </div>
-        <div class="app-header">
-            <h1 class="app-title">HVH<span class="config-text">TEAM</span></h1>
-            <div class="app-subtitle">system game free fire touch smooth</div>
-        </div>
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon"></div>
-                <span class="section-title">CHỨC NĂNG</span>
+            <div class="back">
+                <h1>Chúc Mừng 8/3</h1>
+                <p>Chúc người con gái anh yêu luôn xinh đẹp, vui vẻ, hạnh phúc và thành công. Cảm ơn em vì đã luôn ở bên cạnh anh, là niềm vui của anh mỗi ngày.</p>
+                <p style="margin-top: 15px; font-weight: 600;">Anh yêu em rất nhiều! 😘🌹</p>
+                <div class="love-icon">💖</div>
             </div>
-            <div class="feature-item" data-feature="config">
-                <div class="feature-content">
-                    <div class="feature-icon config-icon">
-                        <i class="fas fa-cog"></i>
-                    </div>
-                    <span class="feature-text">Config Settings</span>
-                </div>
-                <div class="toggle-switch" data-toggle="config">
-                    <div class="toggle-slider">
-                        <div class="slider-inner"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="feature-item" data-feature="lux">
-                <div class="feature-content">
-                    <div class="feature-icon lux-icon">
-                        <i class="fas fa-magic"></i>
-                    </div>
-                    <span class="feature-text">Trợ Năng LUX</span>
-                </div>
-                <div class="toggle-switch" data-toggle="lux">
-                    <div class="toggle-slider">
-                        <div class="slider-inner"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon"></div>
-                <span class="section-title">LUX SENSI</span>
-            </div>
-            <div class="sensi-note">
-                <i class="fas fa-info-circle"></i>
-                <span>Speed mod aotu touch view</span>
-            </div>
-            <div class="feature-item device-item">
-                <div class="feature-content">
-                    <div class="feature-icon device-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <div class="device-info">
-                        <span class="feature-text">DEVICE:</span>
-                        <span class="device-model">CPH2237</span>
-                    </div>
-                </div>
-            </div>
-            <div class="feature-item dropdown-item">
-                <div class="feature-content">
-                    <div class="feature-icon mode-icon">
-                        <i class="fas fa-sliders-h"></i>
-                    </div>
-                    <span class="feature-text">Chế độ:</span>
-                </div>
-                <div class="dropdown" data-dropdown="mode">
-                    <div class="dropdown-selected">
-                        <span>Mượt Mà</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="feature-item dropdown-item">
-                <div class="feature-content">
-                    <div class="feature-icon dpi-icon">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </div>
-                    <span class="feature-text">DPI:</span>
-                </div>
-                <div class="dropdown" data-dropdown="dpi">
-                    <div class="dropdown-selected">
-                        <span>1.0x - Tiêu Chuẩn</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="activate-section">
-            <button class="activate-btn" id="activateBtn">
-                <span class="btn-text">LUX SENSI ACTIVE</span>
-                <div class="btn-glow"></div>
-                <div class="btn-ripple"></div>
-            </button>
         </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+        // Tạo hiệu ứng trái tim rơi nền
+        function createHearts() {
+            const icons = ['❤️', '💖', '💕', '🌸', '✨', '🌹'];
+            for (let i = 0; i < 50; i++) {
+                let heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.innerText = icons[Math.floor(Math.random() * icons.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                document.body.appendChild(heart);
+            }
+        }
+        createHearts();
 
+        // Xử lý lật thiệp và hiệu ứng click
+        const card = document.getElementById('greetingCard');
+        card.addEventListener('click', function(e) {
+            this.classList.toggle('open');
+            createSparkles(e.clientX, e.clientY);
+        });
+
+        // Xử lý phát nhạc
+        const audio = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Ngăn không cho click truyền xuống thiệp
+            if (isPlaying) {
+                audio.pause();
+                playBtn.innerText = '🎵';
+                playBtn.style.animation = 'none';
+            } else {
+                audio.play();
+                playBtn.innerText = '⏸️';
+                playBtn.style.animation = 'pulse 1.5s infinite';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Hiệu ứng pháo hoa tia sáng khi click
+        function createSparkles(x, y) {
+            for (let i = 0; i < 12; i++) {
+                let sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = x + (Math.random() * 60 - 30) + 'px';
+                sparkle.style.top = y + (Math.random() * 60 - 30) + 'px';
+                
+                // Random màu sắc cho tia sáng
+                const colors = ['#fff', '#ff9a9e', '#fecfef', '#ff4757'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                sparkle.style.background = `radial-gradient(circle, ${randomColor} 0%, transparent 70%)`;
+                
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 800);
+            }
+        }
+
+        // Tự động thêm hiệu ứng tia sáng di chuột
+        document.addEventListener('mousemove', function(e) {
+            if(Math.random() > 0.85) { // Không tạo quá nhiều
+                let sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.width = '10px';
+                sparkle.style.height = '10px';
+                sparkle.style.left = e.clientX + 'px';
+                sparkle.style.top = e.clientY + 'px';
+                sparkle.style.background = '#fff';
+                sparkle.style.animationDuration = '0.5s';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 500);
+            }
+        });
+    </script>
+</body>
 </html>
