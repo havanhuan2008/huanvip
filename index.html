@@ -709,7 +709,7 @@
         const label=document.getElementById('copy-label');
         navigator.clipboard.writeText(inp.value).catch(()=>{ inp.select(); document.execCommand('copy'); });
         btn.classList.add('copied'); icon.className='fa-solid fa-check'; label.textContent='ĐÃ COPY';
-        showToast('Đã sao chép link!','fa-copy','#00e676');
+        showToast('Đã sao chép link hihii','fa-copy','#00e676');
         setTimeout(()=>{ btn.classList.remove('copied'); icon.className='fa-solid fa-copy'; label.textContent='COPY'; },2500);
     }
 
