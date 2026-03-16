@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AIMLOCK SUPER V2</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- ══ FIREBASE SDK huan══ -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
@@ -25,65 +24,44 @@
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; -webkit-tap-highlight-color:transparent; }
-
         body { background:#080002; color:#fff; min-height:100vh; overflow-x:hidden; }
 
-        /* ── CANVAS ── */
         #particles-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
 
-        /* ── SCREENS ── */
         .screen { position:relative; z-index:10; min-height:100vh; display:none; flex-direction:column; justify-content:center; align-items:center; padding:30px 20px; }
         .screen.active { display:flex; }
 
-        /* ── SPLASH / LOADING SCREEN ── */
+        /* SPLASH */
         #splash-screen {
             position:fixed; top:0; left:0; width:100%; height:100%;
             background:#080002; z-index:99990;
             display:flex; flex-direction:column; justify-content:center; align-items:center; gap:18px;
         }
         #splash-screen.hidden { display:none; }
-        .splash-logo {
-            width:90px; height:90px; border-radius:50%;
-            border:3px solid var(--red);
-            box-shadow:0 0 30px var(--red-glow);
-            object-fit:cover;
-            animation:pulseRing 1.5s ease-in-out infinite;
-        }
+        .splash-logo { width:90px; height:90px; border-radius:50%; border:3px solid var(--red); box-shadow:0 0 30px var(--red-glow); object-fit:cover; animation:pulseRing 1.5s ease-in-out infinite; }
         .splash-title { font-size:20px; font-weight:800; letter-spacing:3px; color:#fff; text-shadow:0 0 14px var(--red-glow); }
         .splash-sub { font-size:12px; color:rgba(255,255,255,0.4); letter-spacing:1px; }
-        .splash-spinner {
-            width:38px; height:38px; border-radius:50%;
-            border:3px solid rgba(255,26,26,0.2);
-            border-top-color:var(--red);
-            animation:spin 0.9s linear infinite;
-        }
+        .splash-spinner { width:38px; height:38px; border-radius:50%; border:3px solid rgba(255,26,26,0.2); border-top-color:var(--red); animation:spin 0.9s linear infinite; }
         @keyframes spin { 100%{ transform:rotate(360deg); } }
 
-        /* ════════════════════════════════════════
-           WELCOME MODAL — slide từ trên xuống
-        ════════════════════════════════════════ */
+        /* WELCOME MODAL */
         .welcome-overlay {
             position:fixed; top:0; left:0; width:100%; height:100%;
             background:rgba(0,0,0,0.82);
             backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
             z-index:99999;
             display:flex; justify-content:center; align-items:flex-start;
-            padding:16px 20px;
-            overflow-y:auto;
+            padding:16px 20px; overflow-y:auto;
         }
         .welcome-overlay.hiding { animation:overlayOut 0.4s ease-in forwards; }
         @keyframes overlayOut { to { opacity:0; pointer-events:none; } }
 
         .welcome-card {
-            background:transparent;
-            border:1.5px solid rgba(255,26,26,0.65);
-            border-radius:24px;
-            width:100%; max-width:360px;
-            overflow:hidden;
+            background:transparent; border:1.5px solid rgba(255,26,26,0.65); border-radius:24px;
+            width:100%; max-width:360px; overflow:hidden;
             box-shadow:0 0 60px rgba(255,26,26,0.25),0 0 120px rgba(255,26,26,0.1);
             backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
-            animation:slideDownBounce 0.65s cubic-bezier(0.22,1.2,0.36,1) forwards;
-            margin-top: 0;
+            animation:slideDownBounce 0.65s cubic-bezier(0.22,1.2,0.36,1) forwards; margin-top:0;
         }
         @keyframes slideDownBounce {
             0%   { transform:translateY(-120%) scale(0.9); opacity:0; }
@@ -94,8 +72,7 @@
 
         .welcome-top-banner {
             background:linear-gradient(135deg,#1a0000,#330000,#1a0000);
-            padding:28px 24px 20px; text-align:center;
-            position:relative; overflow:hidden;
+            padding:28px 24px 20px; text-align:center; position:relative; overflow:hidden;
         }
         .welcome-top-banner::before {
             content:''; position:absolute; top:0; left:-100%; width:60%; height:100%;
@@ -104,121 +81,50 @@
         }
         @keyframes bannerShine { 100%{ left:200%; } }
 
-        .welcome-gift-icon {
-            font-size:44px; margin-bottom:12px; display:block;
-            filter:drop-shadow(0 0 14px rgba(255,26,26,0.7));
-            animation:iconFloat 3s ease-in-out infinite;
-        }
+        .welcome-gift-icon { font-size:44px; margin-bottom:12px; display:block; filter:drop-shadow(0 0 14px rgba(255,26,26,0.7)); animation:iconFloat 3s ease-in-out infinite; }
         @keyframes iconFloat { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
 
-        .welcome-badge {
-            display:inline-block;
-            background:transparent;
-            border:1.5px solid rgba(255,26,26,0.7);
-            color:#ff6644; font-size:11px; font-weight:800; letter-spacing:2px;
-            padding:4px 14px; border-radius:30px; margin-bottom:10px;
-            text-transform:uppercase;
-        }
+        .welcome-badge { display:inline-block; background:transparent; border:1.5px solid rgba(255,26,26,0.7); color:#ff6644; font-size:11px; font-weight:800; letter-spacing:2px; padding:4px 14px; border-radius:30px; margin-bottom:10px; text-transform:uppercase; }
         .welcome-headline { font-size:17px; font-weight:800; color:#fff; line-height:1.4; text-shadow:0 0 10px var(--red-glow); }
         .welcome-headline span { color:#ffd600; }
 
         .welcome-body { padding:20px 24px; }
-
         .welcome-desc { font-size:13px; color:rgba(255,255,255,0.65); line-height:1.6; margin-bottom:18px; text-align:center; }
         .welcome-desc strong { color:#fff; }
 
         .welcome-steps { display:flex; flex-direction:column; gap:9px; margin-bottom:20px; }
         .welcome-step { display:flex; align-items:center; gap:10px; font-size:12px; color:rgba(255,255,255,0.7); }
-        .step-num {
-            width:22px; height:22px; border-radius:50%; flex-shrink:0;
-            background:transparent; border:1px solid rgba(255,26,26,0.55);
-            display:flex; justify-content:center; align-items:center;
-            font-size:11px; font-weight:800; color:var(--red);
-        }
+        .step-num { width:22px; height:22px; border-radius:50%; flex-shrink:0; background:transparent; border:1px solid rgba(255,26,26,0.55); display:flex; justify-content:center; align-items:center; font-size:11px; font-weight:800; color:var(--red); }
 
-        .link-row {
-            display:flex; gap:0; margin-bottom:16px;
-            border:1.5px solid rgba(255,26,26,0.5); border-radius:11px; overflow:hidden;
-        }
-        .link-input {
-            flex:1; background:transparent; padding:11px 14px;
-            color:rgba(255,255,255,0.8); font-size:12px; border:none; outline:none;
-            font-family:'Share Tech Mono',monospace;
-            white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-        }
-        .btn-copy {
-            background:transparent; border:none; border-left:1.5px solid rgba(255,26,26,0.5);
-            padding:11px 16px; color:var(--red); font-size:12px; font-weight:700;
-            cursor:pointer; display:flex; align-items:center; gap:7px;
-            white-space:nowrap; transition:0.2s; letter-spacing:0.5px;
-        }
+        .link-row { display:flex; gap:0; margin-bottom:16px; border:1.5px solid rgba(255,26,26,0.5); border-radius:11px; overflow:hidden; }
+        .link-input { flex:1; background:transparent; padding:11px 14px; color:rgba(255,255,255,0.8); font-size:12px; border:none; outline:none; font-family:'Share Tech Mono',monospace; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .btn-copy { background:transparent; border:none; border-left:1.5px solid rgba(255,26,26,0.5); padding:11px 16px; color:var(--red); font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:7px; white-space:nowrap; transition:0.2s; letter-spacing:0.5px; }
         .btn-copy:hover { background:rgba(255,26,26,0.08); }
         .btn-copy:active { transform:scale(0.95); }
         .btn-copy.copied { color:var(--green); border-left-color:rgba(0,230,118,0.4); }
 
         .welcome-btns { display:flex; gap:10px; }
-
-        .btn-close-min {
-            flex:1; padding:12px 8px;
-            background:transparent; border:1px solid rgba(255,255,255,0.2);
-            border-radius:10px; color:rgba(255,255,255,0.5);
-            font-size:12px; font-weight:600; cursor:pointer;
-            display:flex; align-items:center; justify-content:center; gap:7px; transition:0.3s;
-        }
+        .btn-close-min { flex:1; padding:12px 8px; background:transparent; border:1px solid rgba(255,255,255,0.2); border-radius:10px; color:rgba(255,255,255,0.5); font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:7px; transition:0.3s; }
         .btn-close-min:hover { border-color:rgba(255,255,255,0.4); color:rgba(255,255,255,0.8); }
-
-        .btn-close-modal {
-            flex:1; padding:12px 8px;
-            background:transparent; border:1.5px solid var(--border);
-            border-radius:10px; color:var(--red);
-            font-size:13px; font-weight:700; cursor:pointer;
-            display:flex; align-items:center; justify-content:center; gap:7px;
-            position:relative; overflow:hidden; transition:0.25s;
-        }
-        .btn-close-modal::before {
-            content:''; position:absolute; top:0; left:-100%; width:50%; height:100%;
-            background:linear-gradient(to right,transparent,rgba(255,26,26,0.12),transparent);
-            transform:skewX(-20deg); animation:closeBtnShine 2s infinite;
-        }
+        .btn-close-modal { flex:1; padding:12px 8px; background:transparent; border:1.5px solid var(--border); border-radius:10px; color:var(--red); font-size:13px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:7px; position:relative; overflow:hidden; transition:0.25s; }
+        .btn-close-modal::before { content:''; position:absolute; top:0; left:-100%; width:50%; height:100%; background:linear-gradient(to right,transparent,rgba(255,26,26,0.12),transparent); transform:skewX(-20deg); animation:closeBtnShine 2s infinite; }
         @keyframes closeBtnShine { 100%{ left:200%; } }
         .btn-close-modal:hover { background:rgba(255,26,26,0.08); box-shadow:0 0 14px rgba(255,26,26,0.2); }
         .btn-close-modal:active { transform:scale(0.96); }
 
-        /* ════════════════════════════════════════
-           LOGIN SCREEN
-        ════════════════════════════════════════ */
-        .login-box {
-            width:100%; max-width:340px;
-            background:transparent;
-            border:1.5px solid var(--border);
-            border-radius:22px; padding:36px 26px 30px;
-            backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-            box-shadow:0 0 50px rgba(255,26,26,0.15),inset 0 0 40px rgba(255,26,26,0.04);
-            animation:fadeInUp 0.6s cubic-bezier(0.19,1,0.22,1);
-            position:relative; overflow:hidden;
-        }
-        .login-box::before,.login-box::after {
-            content:''; position:absolute; width:28px; height:28px;
-            border-color:var(--red); border-style:solid;
-        }
+        /* COUNTDOWN timer in close button */
+        .timer-badge { background:rgba(255,26,26,0.15); border:1px solid rgba(255,26,26,0.4); border-radius:20px; padding:2px 8px; font-size:10px; font-weight:800; color:var(--red); }
+
+        /* LOGIN */
+        .login-box { width:100%; max-width:340px; background:transparent; border:1.5px solid var(--border); border-radius:22px; padding:36px 26px 30px; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); box-shadow:0 0 50px rgba(255,26,26,0.15),inset 0 0 40px rgba(255,26,26,0.04); animation:fadeInUp 0.6s cubic-bezier(0.19,1,0.22,1); position:relative; overflow:hidden; }
+        .login-box::before,.login-box::after { content:''; position:absolute; width:28px; height:28px; border-color:var(--red); border-style:solid; }
         .login-box::before { top:-1px; left:-1px; border-width:3px 0 0 3px; border-radius:4px 0 0 0; }
         .login-box::after  { bottom:-1px; right:-1px; border-width:0 3px 3px 0; border-radius:0 0 4px 0; }
-
         @keyframes fadeInUp { from { transform:translateY(50px); opacity:0; } to { transform:translateY(0); opacity:1; } }
 
         .logo-wrap { display:flex; justify-content:center; margin-bottom:18px; position:relative; }
-        .logo-circle {
-            width:86px; height:86px; border-radius:50%;
-            border:3px solid var(--red);
-            box-shadow:0 0 22px var(--red-glow),0 0 50px rgba(255,26,26,0.2);
-            object-fit:cover; animation:pulseRing 2.5s ease-in-out infinite; display:block;
-        }
-        .logo-badge {
-            position:absolute; bottom:0; right:calc(50% - 55px);
-            background:transparent; border:1.5px solid rgba(255,26,26,0.7);
-            color:var(--red); font-size:9px; font-weight:800;
-            padding:2px 7px; border-radius:20px; letter-spacing:1px;
-        }
+        .logo-circle { width:86px; height:86px; border-radius:50%; border:3px solid var(--red); box-shadow:0 0 22px var(--red-glow),0 0 50px rgba(255,26,26,0.2); object-fit:cover; animation:pulseRing 2.5s ease-in-out infinite; display:block; }
+        .logo-badge { position:absolute; bottom:0; right:calc(50% - 55px); background:transparent; border:1.5px solid rgba(255,26,26,0.7); color:var(--red); font-size:9px; font-weight:800; padding:2px 7px; border-radius:20px; letter-spacing:1px; }
         @keyframes pulseRing {
             0%  { box-shadow:0 0 10px var(--red-glow); }
             50% { box-shadow:0 0 30px var(--red-glow),0 0 70px rgba(255,26,26,0.2); }
@@ -229,99 +135,40 @@
         .login-sub { text-align:center; font-size:12px; color:rgba(255,255,255,0.38); margin-bottom:26px; letter-spacing:0.5px; }
 
         .input-wrap { position:relative; margin-bottom:18px; }
-        .input-wrap input {
-            width:100%; background:transparent; border:1.5px solid var(--border);
-            border-radius:11px; padding:13px 50px 13px 16px;
-            color:#fff; font-size:15px; outline:none; transition:0.3s; letter-spacing:0.5px;
-        }
+        .input-wrap input { width:100%; background:transparent; border:1.5px solid var(--border); border-radius:11px; padding:13px 50px 13px 16px; color:#fff; font-size:15px; outline:none; transition:0.3s; letter-spacing:0.5px; }
         .input-wrap input::placeholder { color:rgba(255,255,255,0.28); }
         .input-wrap input:focus { border-color:var(--red); box-shadow:0 0 18px rgba(255,26,26,0.35); }
         .input-icon { position:absolute; right:15px; top:50%; transform:translateY(-50%); color:rgba(255,26,26,0.75); font-size:17px; cursor:pointer; transition:0.3s; }
-        .input-icon:hover { color:var(--red); }
-
-        /* Toggle eye password */
         .eye-toggle { position:absolute; right:45px; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.3); font-size:15px; cursor:pointer; transition:0.3s; }
         .eye-toggle:hover { color:rgba(255,255,255,0.7); }
 
-        .btn-login {
-            width:100%; padding:14px 20px;
-            background:transparent;
-            border:2px solid var(--red);
-            border-radius:12px;
-            color:var(--red); font-size:14px; font-weight:800;
-            letter-spacing:2.5px; text-transform:uppercase;
-            cursor:pointer; transition:all 0.3s ease;
-            display:flex; align-items:center; justify-content:center; gap:12px;
-            position:relative; overflow:hidden;
-            box-shadow:0 0 18px rgba(255,26,26,0.2),inset 0 0 20px rgba(255,26,26,0.05);
-        }
-        .btn-login::before {
-            content:''; position:absolute; inset:-2px; border-radius:13px;
-            border:2px solid rgba(255,26,26,0.4);
-            animation:loginBorderPulse 2s ease-out infinite;
-            pointer-events:none;
-        }
-        @keyframes loginBorderPulse {
-            0%   { opacity:1; inset:-2px; }
-            100% { opacity:0; inset:-10px; }
-        }
-        .btn-login::after {
-            content:''; position:absolute; top:0; left:-100%; width:50%; height:100%;
-            background:linear-gradient(to right,transparent,rgba(255,26,26,0.15),transparent);
-            transform:skewX(-20deg); animation:loginShine 2.5s infinite;
-        }
+        .btn-login { width:100%; padding:14px 20px; background:transparent; border:2px solid var(--red); border-radius:12px; color:var(--red); font-size:14px; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; gap:12px; position:relative; overflow:hidden; box-shadow:0 0 18px rgba(255,26,26,0.2),inset 0 0 20px rgba(255,26,26,0.05); }
+        .btn-login::before { content:''; position:absolute; inset:-2px; border-radius:13px; border:2px solid rgba(255,26,26,0.4); animation:loginBorderPulse 2s ease-out infinite; pointer-events:none; }
+        @keyframes loginBorderPulse { 0%{ opacity:1; inset:-2px; } 100%{ opacity:0; inset:-10px; } }
+        .btn-login::after { content:''; position:absolute; top:0; left:-100%; width:50%; height:100%; background:linear-gradient(to right,transparent,rgba(255,26,26,0.15),transparent); transform:skewX(-20deg); animation:loginShine 2.5s infinite; }
         @keyframes loginShine { 100%{ left:200%; } }
-
-        .btn-login:hover {
-            background:rgba(255,26,26,0.1);
-            color:#fff;
-            box-shadow:0 0 28px rgba(255,26,26,0.4),inset 0 0 20px rgba(255,26,26,0.1);
-        }
+        .btn-login:hover { background:rgba(255,26,26,0.1); color:#fff; box-shadow:0 0 28px rgba(255,26,26,0.4),inset 0 0 20px rgba(255,26,26,0.1); }
         .btn-login:active { transform:scale(0.97); }
         .btn-login:disabled { opacity:0.6; cursor:not-allowed; }
-
-        .btn-login .li-icon-left {
-            font-size:19px;
-            filter:drop-shadow(0 0 6px rgba(255,26,26,0.8));
-            animation:loginIconPulse 1.8s ease-in-out infinite;
-        }
-        @keyframes loginIconPulse {
-            0%,100% { transform:scale(1); filter:drop-shadow(0 0 4px rgba(255,26,26,0.6)); }
-            50%     { transform:scale(1.2); filter:drop-shadow(0 0 12px rgba(255,26,26,1)); }
-        }
+        .btn-login .li-icon-left { font-size:19px; filter:drop-shadow(0 0 6px rgba(255,26,26,0.8)); animation:loginIconPulse 1.8s ease-in-out infinite; }
+        @keyframes loginIconPulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.2); } }
         .btn-login .li-icon-right { font-size:14px; opacity:0.7; animation:arrowPing 1.4s ease-in-out infinite; }
         @keyframes arrowPing { 0%,100%{ transform:translateX(0); opacity:0.7; } 50%{ transform:translateX(5px); opacity:1; } }
 
         .err-msg { color:var(--red); font-size:12px; text-align:center; margin-top:-8px; margin-bottom:12px; display:none; gap:6px; align-items:center; justify-content:center; }
 
-        /* ── FIREBASE STATUS indicator ── */
-        .firebase-status {
-            display:flex; align-items:center; gap:6px;
-            font-size:10px; color:rgba(255,255,255,0.3); margin-bottom:18px;
-            justify-content:center;
-        }
-        .firebase-dot {
-            width:6px; height:6px; border-radius:50%;
-            background:#666; transition:0.5s;
-        }
+        .firebase-status { display:flex; align-items:center; gap:6px; font-size:10px; color:rgba(255,255,255,0.3); margin-bottom:18px; justify-content:center; }
+        .firebase-dot { width:6px; height:6px; border-radius:50%; background:#666; transition:0.5s; }
         .firebase-dot.connected { background:var(--green); box-shadow:0 0 6px rgba(0,230,118,0.7); }
 
         .features-list { margin-top:22px; display:flex; flex-direction:column; gap:9px; max-width:340px; width:100%; animation:fadeInUp 0.8s 0.15s cubic-bezier(0.19,1,0.22,1) both; }
         .feature-item { display:flex; align-items:center; gap:11px; font-size:13px; color:rgba(255,255,255,0.7); font-weight:500; }
         .feature-item .check { width:21px; height:21px; background:transparent; border-radius:50%; display:flex; justify-content:center; align-items:center; color:var(--green); font-size:11px; flex-shrink:0; border:1px solid rgba(0,230,118,0.45); }
 
-        /* ════════════════════════════════════════
-           DASHBOARD
-        ════════════════════════════════════════ */
+        /* DASHBOARD */
         #dashboard { justify-content:flex-start; padding:18px 16px 36px 16px; gap:0; }
 
-        .info-banner {
-            width:100%; max-width:440px; background:transparent;
-            border:1px solid var(--border); border-radius:16px; padding:14px 16px;
-            backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-            display:flex; align-items:center; gap:14px; margin-bottom:18px;
-            box-shadow:0 0 25px rgba(255,26,26,0.08); animation:fadeInDown 0.5s ease-out;
-        }
+        .info-banner { width:100%; max-width:440px; background:transparent; border:1px solid var(--border); border-radius:16px; padding:14px 16px; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); display:flex; align-items:center; gap:14px; margin-bottom:18px; box-shadow:0 0 25px rgba(255,26,26,0.08); animation:fadeInDown 0.5s ease-out; }
         @keyframes fadeInDown { from{ transform:translateY(-18px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
         .banner-logo-img { width:50px; height:50px; border-radius:50%; border:2px solid var(--red); box-shadow:0 0 12px var(--red-glow); flex-shrink:0; object-fit:cover; display:block; }
         .banner-info { flex:1; }
@@ -332,42 +179,19 @@
         .mini-check-item i.red { color:var(--red); }
         .mini-check-item i.yellow { color:var(--yellow); }
 
-        /* Key info box in dashboard */
-        .key-info-box {
-            width:100%; max-width:440px; background:transparent;
-            border:1px solid rgba(255,214,0,0.35); border-radius:12px;
-            padding:10px 14px; margin-bottom:18px;
-            display:flex; align-items:center; gap:10px;
-            font-size:11px; color:rgba(255,255,255,0.6);
-        }
+        .key-info-box { width:100%; max-width:440px; background:transparent; border:1px solid rgba(255,214,0,0.35); border-radius:12px; padding:10px 14px; margin-bottom:18px; display:flex; align-items:center; gap:10px; font-size:11px; color:rgba(255,255,255,0.6); }
         .key-info-box i { color:var(--yellow); font-size:13px; }
         .key-info-detail { flex:1; }
         .key-info-val { font-weight:700; color:var(--yellow); font-size:12px; }
 
-        /* Logout button */
-        .btn-logout {
-            width:100%; max-width:440px;
-            margin-top:20px;
-            padding:12px; background:transparent;
-            border:1px solid rgba(255,26,26,0.3); border-radius:10px;
-            color:rgba(255,26,26,0.6); font-size:12px; font-weight:600;
-            cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;
-            transition:0.3s; letter-spacing:0.5px;
-        }
+        .btn-logout { width:100%; max-width:440px; margin-top:20px; padding:12px; background:transparent; border:1px solid rgba(255,26,26,0.3); border-radius:10px; color:rgba(255,26,26,0.6); font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:0.3s; letter-spacing:0.5px; }
         .btn-logout:hover { border-color:var(--red); color:var(--red); background:rgba(255,26,26,0.06); }
 
         .section-label { font-size:11px; font-weight:700; color:rgba(255,255,255,0.4); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; width:100%; max-width:440px; display:flex; align-items:center; gap:8px; }
         .section-label::after { content:''; flex:1; height:1px; background:rgba(255,26,26,0.22); }
 
         .cards-list { display:flex; flex-direction:column; gap:10px; width:100%; max-width:440px; }
-        .feat-row {
-            background:transparent; border:1px solid var(--border-dim);
-            border-radius:14px; padding:13px 16px;
-            backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px);
-            display:flex; align-items:center; gap:14px;
-            position:relative; overflow:hidden; transition:all 0.3s ease;
-            animation:cardIn 0.5s cubic-bezier(0.19,1,0.22,1) both;
-        }
+        .feat-row { background:transparent; border:1px solid var(--border-dim); border-radius:14px; padding:13px 16px; backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px); display:flex; align-items:center; gap:14px; position:relative; overflow:hidden; transition:all 0.3s ease; animation:cardIn 0.5s cubic-bezier(0.19,1,0.22,1) both; }
         .feat-row:nth-child(1){ animation-delay:0.06s; }
         .feat-row:nth-child(2){ animation-delay:0.12s; }
         .feat-row:nth-child(3){ animation-delay:0.18s; }
@@ -381,7 +205,6 @@
 
         .row-icon { width:40px; height:40px; border-radius:10px; background:transparent; border:1px solid var(--border-dim); display:flex; justify-content:center; align-items:center; font-size:17px; color:rgba(255,255,255,0.4); flex-shrink:0; transition:0.3s; }
         .feat-row.on .row-icon { border-color:var(--red); color:var(--red); box-shadow:0 0 12px rgba(255,26,26,0.35); }
-
         .row-text { flex:1; }
         .row-label { font-size:14px; font-weight:700; color:#fff; }
         .row-desc { font-size:11px; color:rgba(255,255,255,0.35); margin-top:1px; }
@@ -445,7 +268,7 @@
         .terminal-inner::-webkit-scrollbar { width:4px; }
         .terminal-inner::-webkit-scrollbar-thumb { background:rgba(0,229,255,0.25); border-radius:2px; }
 
-        /* ── ACTIVATION MODAL ── */
+        /* ACTIVATION MODAL */
         .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); z-index:8000; display:none; justify-content:center; align-items:center; }
         .modal-overlay.show { display:flex; animation:fadeIn 0.25s ease; }
         @keyframes fadeIn { from{ opacity:0; } to{ opacity:1; } }
@@ -470,20 +293,14 @@
         .modal-box.deact .orbit-ring { border-color:rgba(255,255,255,0.15); }
         .modal-box.deact .orbit-ring::before { background:rgba(255,255,255,0.3); box-shadow:none; }
 
-        /* ── TOAST ── */
+        /* TOAST */
         .toast-wrap { position:fixed; top:18px; left:50%; transform:translateX(-50%); z-index:99998; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
         .toast { background:rgba(8,0,2,0.9); border:1px solid rgba(255,26,26,0.5); color:#fff; padding:10px 20px; border-radius:30px; font-size:13px; font-weight:600; backdrop-filter:blur(12px); display:flex; align-items:center; gap:10px; animation:toastIn 0.3s ease-out,toastOut 0.3s ease-in 2.5s forwards; white-space:nowrap; }
         @keyframes toastIn  { from{ transform:translateY(-20px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
         @keyframes toastOut { from{ opacity:1; } to{ transform:translateY(-20px); opacity:0; } }
 
-        /* ── EXPIRED / BLOCKED OVERLAY ── */
-        .blocked-overlay {
-            position:fixed; top:0; left:0; width:100%; height:100%;
-            background:rgba(0,0,0,0.92); backdrop-filter:blur(12px);
-            z-index:99995; display:none;
-            flex-direction:column; justify-content:center; align-items:center; gap:16px;
-            padding:30px;
-        }
+        /* BLOCKED OVERLAY */
+        .blocked-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); backdrop-filter:blur(12px); z-index:99995; display:none; flex-direction:column; justify-content:center; align-items:center; gap:16px; padding:30px; }
         .blocked-overlay.show { display:flex; }
         .blocked-icon { font-size:54px; color:var(--red); filter:drop-shadow(0 0 16px var(--red-glow)); }
         .blocked-title { font-size:20px; font-weight:800; color:#fff; text-align:center; }
@@ -493,976 +310,903 @@
 </head>
 <body>
 
-    <canvas id="particles-canvas"></canvas>
-    <div class="toast-wrap" id="toast-wrap"></div>
+<canvas id="particles-canvas"></canvas>
+<div class="toast-wrap" id="toast-wrap"></div>
 
-    <!-- ══ SPLASH / LOADING ══ -->
-    <div id="splash-screen">
-        <img class="splash-logo"
-             src="https://sf-static.upanhlaylink.com/img/image_20260313c8e5ff3531d34404575f229fe201d9ac.jpg"
-             onerror="this.src='https://ui-avatars.com/api/?name=VIP&background=cc0000&color=fff&size=200&bold=true'"
-             alt="Logo">
-        <div class="splash-title">AIMLOCK SUPER V2</div>
-        <div class="splash-sub">Đang kết nối server...</div>
-        <div class="splash-spinner"></div>
-    </div>
+<!-- SPLASH -->
+<div id="splash-screen">
+    <img class="splash-logo"
+         src="https://sf-static.upanhlaylink.com/img/image_20260313c8e5ff3531d34404575f229fe201d9ac.jpg"
+         onerror="this.src='https://ui-avatars.com/api/?name=VIP&background=cc0000&color=fff&size=200&bold=true'"
+         alt="Logo">
+    <div class="splash-title">AIMLOCK SUPER V2</div>
+    <div class="splash-sub">Đang kết nối server...</div>
+    <div class="splash-spinner"></div>
+</div>
 
-    <!-- ══ EXPIRED / BLOCKED OVERLAY ══ -->
-    <div class="blocked-overlay" id="blocked-overlay">
-        <div class="blocked-icon"><i class="fa-solid fa-ban"></i></div>
-        <div class="blocked-title">Key Đã Hết Hạn!</div>
-        <div class="blocked-msg" id="blocked-msg">Key của bạn đã hết hạn hoặc bị vô hiệu hóa.<br>Vui lòng liên hệ admin để gia hạn.</div>
-        <div class="blocked-zalo"><i class="fa-brands fa-facebook-messenger"></i> Zalo: 0379435045</div>
-        <button onclick="doLogout()" style="margin-top:8px;padding:10px 28px;background:transparent;border:1.5px solid rgba(255,26,26,0.5);border-radius:10px;color:var(--red);font-size:13px;font-weight:700;cursor:pointer;">Đăng xuất</button>
-    </div>
+<!-- BLOCKED OVERLAY -->
+<div class="blocked-overlay" id="blocked-overlay">
+    <div class="blocked-icon"><i class="fa-solid fa-ban"></i></div>
+    <div class="blocked-title">Key Đã Hết Hạn!</div>
+    <div class="blocked-msg" id="blocked-msg">Key của bạn đã hết hạn hoặc bị vô hiệu hóa.<br>Vui lòng liên hệ admin để gia hạn.</div>
+    <div class="blocked-zalo"><i class="fa-brands fa-facebook-messenger"></i> Zalo: 0379435045</div>
+    <button onclick="doLogout()" style="margin-top:8px;padding:10px 28px;background:transparent;border:1.5px solid rgba(255,26,26,0.5);border-radius:10px;color:var(--red);font-size:13px;font-weight:700;cursor:pointer;">Đăng xuất</button>
+</div>
 
-    <!-- ══════════════════════════════════════════
-         WELCOME MODAL — tự hiện khi vào app
-    ══════════════════════════════════════════ -->
-    <div class="welcome-overlay" id="welcome-overlay">
-        <div class="welcome-card">
-
-            <div class="welcome-top-banner">
-                <span class="welcome-gift-icon">🎁</span>
-                <div class="welcome-badge">FREE KEY VĨNH VIỄN</div>
-                <div class="welcome-headline">
-                    Lấy Key VIP <span>MIỄN PHÍ</span><br>ngày 15/03/2026
-                </div>
-            </div>
-
-            <div class="welcome-body">
-                <p class="welcome-desc">
-                    Sao chép Key Bên Dưới <strong>Key VIP miễn phí</strong>.<br>
-                    Sao chép key và dán vào ô input nhập key và ấn vào nút Login.
-                    Nếu Key Gặp Lỗi, Không Tồn Tại Key Thì hãy Vượt Lại Link Để lấy Key Mới 🕊️
-                    Cảm Ơn Bạn Đã Sử Dụng App nhé 
-                    
-                </p>
-                <p>Chúc Vạn có một Ngày An Lành </p>
-
-                <div class="welcome-steps">
-                    <div class="welcome-step"><div class="step-num">1</div> Nhấn <strong>&nbsp;COPY&nbsp;</strong> để sao chép key </div>
-                    <div class="welcome-step"><div class="step-num">2</div> Mua Đồ Chơi Vip Liên Hệ Zalo : 0379435045</div>
-                    <div class="welcome-step"><div class="step-num">3</div> Cảm Ơn Member Đã dùng app nhé !</div>
-                    <div class="welcome-step"><div class="step-num">4</div> Nhập Key vào ô bên dưới để đăng nhập</div>
-                </div>
-
-                <div class="link-row">
-                    <input class="link-input" id="key-link-input" type="text"
-                           value="https://link4m.com/ahI8J" readonly>
-                    <button class="btn-copy" id="btn-copy-link" onclick="copyLink()">
-                        <i class="fa-solid fa-copy" id="copy-icon"></i>
-                        <span id="copy-label">COPY</span>
-                    </button>
-                </div>
-
-                <div class="welcome-btns">
-                    <button class="btn-close-min" onclick="closeWelcome(true)">
-                        <i class="fa-regular fa-clock"></i> Đóng 3 phút
-                    </button>
-                    <button class="btn-close-modal" onclick="closeWelcome(false)">
-                        <i class="fa-solid fa-xmark"></i> Đóng
-                    </button>
-                </div>
+<!-- WELCOME MODAL — link được load từ Firebase -->
+<div class="welcome-overlay" id="welcome-overlay">
+    <div class="welcome-card">
+        <div class="welcome-top-banner">
+            <span class="welcome-gift-icon">🎁</span>
+            <div class="welcome-badge" id="welcome-badge-text">FREE KEY VIP</div>
+            <div class="welcome-headline" id="welcome-headline">
+                Lấy Key VIP <span>MIỄN PHÍ</span>
             </div>
         </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════
-         LOGIN SCREEN
-    ══════════════════════════════════════════ -->
-    <div class="screen active" id="login-screen">
-
-        <div class="login-box">
-            <div class="logo-wrap">
-                <img class="logo-circle"
-                     src="https://sf-static.upanhlaylink.com/img/image_20260313c8e5ff3531d34404575f229fe201d9ac.jpg"
-                     alt="Logo VIP"
-                     onerror="this.src='https://ui-avatars.com/api/?name=VIP&background=cc0000&color=fff&size=200&bold=true'">
-                <div class="logo-badge">VIP PRO</div>
+        <div class="welcome-body">
+            <p class="welcome-desc" id="welcome-desc">
+                Sao chép Link bên dưới để lấy <strong>Key VIP miễn phí</strong>.<br>
+                Sao chép key và dán vào ô nhập key rồi nhấn Login.<br>
+                Cảm Ơn Bạn Đã Sử Dụng App 🕊️
+            </p>
+            <div class="welcome-steps">
+                <div class="welcome-step"><div class="step-num">1</div> Nhấn <strong>&nbsp;COPY&nbsp;</strong> để sao chép link lấy key</div>
+                <div class="welcome-step"><div class="step-num">2</div> Mua Đồ Chơi Vip Liên Hệ Zalo: 0379435045</div>
+                <div class="welcome-step"><div class="step-num">3</div> Cảm Ơn Member Đã dùng app nhé!</div>
+                <div class="welcome-step"><div class="step-num">4</div> Nhập Key vào ô bên dưới để đăng nhập</div>
             </div>
 
-            <div class="login-title">AIMLOCK SUPER V2</div>
-            <div class="login-sub">Nhập Key Để Tiếp Tục</div>
-
-            <!-- Firebase connection status -->
-            <div class="firebase-status">
-                <div class="firebase-dot" id="fb-dot"></div>
-                <span id="fb-status-text">Đang kết nối Firebase...</span>
-            </div>
-
-            <div class="input-wrap">
-                <input type="password" id="key-input" placeholder="Nhập Key của bạn..." autocomplete="off">
-                <i class="fa-solid fa-eye eye-toggle" id="eye-toggle" onclick="toggleEye()" title="Hiện/ẩn key"></i>
-                <i class="fa-solid fa-key input-icon"></i>
-            </div>
-
-            <div class="err-msg" id="err-msg" style="display:none; flex-direction:row;">
-                <i class="fa-solid fa-circle-exclamation"></i> <span id="err-text">Key không hợp lệ! Hãy thử lại.</span>
-            </div>
-
-            <button class="btn-login" id="btn-login" onclick="doLogin()">
-                <i class="fa-solid fa-fingerprint li-icon-left"></i>
-                ĐĂNG NHẬP
-                <i class="fa-solid fa-chevron-right li-icon-right"></i>
-            </button>
-        </div>
-
-        <div class="features-list">
-            <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Bypass Anti-Cheat chuyên nghiệp &amp; ẩn hoàn toàn</div>
-            <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Tối ưu FPS tối đa và giảm Ping xuống mức thấp nhất</div>
-            <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Cải thiện kéo tâm full đỏ dễ dàng </div>
-            <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Cập nhật liên tục, hỗ trợ tất cả thiết bị Mobile</div>
-            <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Hỗ trợ 24/7 · Bảo đảm an toàn tài khoản tuyệt đối</div>
-            <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Liên Hệ Zalo : 0379435045 Để Múc Đồ Chơi Vip</div>
-        </div>
-    </div>
-
-    <!-- ══════════════════════════════════════════
-         DASHBOARD SCREEN
-    ══════════════════════════════════════════ -->
-    <div class="screen" id="dashboard">
-
-        <div class="info-banner">
-            <img class="banner-logo-img"
-                 src="https://sf-static.upanhlaylink.com/img/image_20260313c8e5ff3531d34404575f229fe201d9ac.jpg"
-                 onerror="this.src='https://ui-avatars.com/api/?name=VIP&background=cc0000&color=fff&size=200'"
-                 alt="Logo">
-            <div class="banner-info">
-                <div class="banner-title">AIMLOCK SUPER V2</div>
-                <div class="mini-checks">
-                    <div class="mini-check-item"><i class="fa-solid fa-check"></i> Trạng thái: Hoạt động</div>
-                    <div class="mini-check-item"><i class="fa-solid fa-check" id="banner-expiry-icon"></i> <span id="banner-expiry-text">Key hợp lệ · Vĩnh viễn</span></div>
-                    <div class="mini-check-item"><i class="fa-solid fa-check"></i> Server: Online · Ping 12ms</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Key Info Box -->
-        <div class="key-info-box" id="key-info-box">
-            <i class="fa-solid fa-shield-keyhole"></i>
-            <div class="key-info-detail">
-                <div style="font-size:10px;margin-bottom:2px;">KEY ĐANG SỬ DỤNG</div>
-                <div class="key-info-val" id="key-info-val">••••••••••••</div>
-                <div id="key-info-expire" style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px;"></div>
-            </div>
-            <i class="fa-solid fa-circle-check" style="color:var(--green);font-size:18px;"></i>
-        </div>
-
-        <div class="section-label"><i class="fa-solid fa-sliders" style="color:var(--red);"></i> Function Home</div>
-
-        <div class="cards-list">
-
-            <div class="feat-row" id="card-1">
-                <div class="row-icon"><i class="fa-solid fa-crosshairs"></i></div>
-                <div class="row-text"><div class="row-label">Aimlock Super 1.0.tsc</div><div class="row-desc">Hỗ Trợ Kéo Tâm Tăng Tỉ Lệ Hessot 75%</div></div>
-                <div class="row-right">
-                    <div class="status-pill" id="pill-1">OFF</div>
-                    <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-1','Aimlock Super 1.0.tsc','fa-crosshairs')"><span class="mini-slider"></span></label>
-                </div>
-            </div>
-
-            <div class="feat-row" id="card-2">
-                <div class="row-icon"><i class="fa-solid fa-bullseye"></i></div>
-                <div class="row-text"><div class="row-label">Aotuhesot Head</div><div class="row-desc">Hỗ trợ khóa Đầu Khi Kéo Tâm</div></div>
-                <div class="row-right">
-                    <div class="status-pill" id="pill-2">OFF</div>
-                    <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-2','Aotuhesot Head','fa-bullseye')"><span class="mini-slider"></span></label>
-                </div>
-            </div>
-
-            <div class="feat-row" id="card-3">
-                <div class="row-icon"><i class="fa-solid fa-rocket"></i></div>
-                <div class="row-text"><div class="row-label">Boost System</div><div class="row-desc">Tăng tốc độ di chuyển nhân vật</div></div>
-                <div class="row-right">
-                    <div class="status-pill" id="pill-3">OFF</div>
-                    <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-3','Boost System','fa-rocket')"><span class="mini-slider"></span></label>
-                </div>
-            </div>
-
-            <div class="feat-row" id="card-4">
-                <div class="row-icon"><i class="fa-solid fa-mobile"></i></div>
-                <div class="row-text"><div class="row-label">Touch Screen</div><div class="row-desc">Tốc Độ Trượt Màn Hình Nhanh Hơn</div></div>
-                <div class="row-right">
-                    <div class="status-pill" id="pill-4">OFF</div>
-                    <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-4','Touch Screen','fa-eye')"><span class="mini-slider"></span></label>
-                </div>
-            </div>
-
-            <div class="feat-row" id="card-5">
-                <div class="row-icon"><i class="fa-solid fa-gauge-high"></i></div>
-                <div class="row-text"><div class="row-label">Fix Lag</div><div class="row-desc">Loại bỏ lag, tối ưu FPS tối đa</div></div>
-                <div class="row-right">
-                    <div class="status-pill" id="pill-5">OFF</div>
-                    <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-5','Fix Lag','fa-gauge-high')"><span class="mini-slider"></span></label>
-                </div>
-            </div>
-
-            <div class="feat-row" id="card-6">
-                <div class="row-icon"><i class="fa-solid fa-user-shield"></i></div>
-                <div class="row-text"><div class="row-label">Dipi Prerium</div><div class="row-desc">Nhẹ Nhàng Khi Kéo Tâm Tất Cả Loại Súng</div></div>
-                <div class="row-right">
-                    <div class="status-pill" id="pill-6">OFF</div>
-                    <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-6','Dipi Prerium','fa-user-shield')"><span class="mini-slider"></span></label>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- MODULE RUNNER -->
-        <div class="module-section-label">
-            <i class="fa-solid fa-terminal" style="color:var(--cyan);"></i> MODULE AIMLOCK SUPER
-        </div>
-
-        <div class="module-card">
-            <div class="module-header">
-                <div class="module-header-left">
-                    <div class="module-header-icon"><i class="fa-solid fa-code"></i></div>
-                    <div>
-                        <div class="module-title-text">Gun Config Injector</div>
-                        <div class="module-title-sub">v3.2.1 · All weapons supported</div>
-                    </div>
-                </div>
-                <button class="btn-run" id="btn-run" onclick="runModule()">
-                    <i class="fa-solid fa-play" id="run-icon"></i>
-                    <span id="run-label">Chạy Module</span>
+            <div class="link-row">
+                <input class="link-input" id="key-link-input" type="text"
+                       value="Đang tải link..." readonly>
+                <button class="btn-copy" id="btn-copy-link" onclick="copyLink()">
+                    <i class="fa-solid fa-copy" id="copy-icon"></i>
+                    <span id="copy-label">COPY</span>
                 </button>
             </div>
-            <div class="terminal-box" id="terminal-box">
-                <div class="terminal-inner" id="terminal-output"></div>
+
+            <div class="welcome-btns">
+                <button class="btn-close-min" id="btn-close-min-timer" onclick="closeWelcome(true)">
+                    <i class="fa-regular fa-clock"></i> <span id="close-timer-text">Đóng (180s)</span>
+                </button>
+                <button class="btn-close-modal" onclick="closeWelcome(false)">
+                    <i class="fa-solid fa-xmark"></i> Đóng
+                </button>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- Logout -->
-        <button class="btn-logout" onclick="doLogout()">
-            <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+<!-- LOGIN SCREEN -->
+<div class="screen active" id="login-screen">
+    <div class="login-box">
+        <div class="logo-wrap">
+            <img class="logo-circle"
+                 src="https://sf-static.upanhlaylink.com/img/image_20260313c8e5ff3531d34404575f229fe201d9ac.jpg"
+                 alt="Logo VIP"
+                 onerror="this.src='https://ui-avatars.com/api/?name=VIP&background=cc0000&color=fff&size=200&bold=true'">
+            <div class="logo-badge">VIP PRO</div>
+        </div>
+        <div class="login-title">AIMLOCK SUPER V2</div>
+        <div class="login-sub">Nhập Key Để Tiếp Tục</div>
+        <div class="firebase-status">
+            <div class="firebase-dot" id="fb-dot"></div>
+            <span id="fb-status-text">Đang kết nối Firebase...</span>
+        </div>
+        <div class="input-wrap">
+            <input type="password" id="key-input" placeholder="Nhập Key của bạn..." autocomplete="off">
+            <i class="fa-solid fa-eye eye-toggle" id="eye-toggle" onclick="toggleEye()" title="Hiện/ẩn key"></i>
+            <i class="fa-solid fa-key input-icon"></i>
+        </div>
+        <div class="err-msg" id="err-msg" style="display:none; flex-direction:row;">
+            <i class="fa-solid fa-circle-exclamation"></i> <span id="err-text">Key không hợp lệ! Hãy thử lại.</span>
+        </div>
+        <button class="btn-login" id="btn-login" onclick="doLogin()">
+            <i class="fa-solid fa-fingerprint li-icon-left"></i>
+            ĐĂNG NHẬP
+            <i class="fa-solid fa-chevron-right li-icon-right"></i>
         </button>
-
     </div>
 
-    <!-- ACTIVATION MODAL -->
-    <div class="modal-overlay" id="modal-overlay">
-        <div class="modal-box" id="modal-box">
-            <div class="orbit-ring">
-                <div class="orbit-center" id="modal-icon"><i class="fa-solid fa-crosshairs"></i></div>
-            </div>
-            <div class="modal-title" id="modal-title">Đang kích Hoạt...</div>
-            <div class="modal-sub" id="modal-sub">Anti Recoil</div>
-            <div class="step-list" id="step-list">
-                <div class="step-item" id="step-0"><div class="step-dot"></div> Khởi tạo module...</div>
-                <div class="step-item" id="step-1"><div class="step-dot"></div> Nạp cấu hình...</div>
-                <div class="step-item" id="step-2"><div class="step-dot"></div> Bypass bảo vệ...</div>
-                <div class="step-item" id="step-3"><div class="step-dot"></div> Áp dụng hoàn tất!</div>
+    <div class="features-list">
+        <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Bypass Anti-Cheat chuyên nghiệp &amp; ẩn hoàn toàn</div>
+        <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Tối ưu FPS tối đa và giảm Ping xuống mức thấp nhất</div>
+        <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Cải thiện kéo tâm full đỏ dễ dàng</div>
+        <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Cập nhật liên tục, hỗ trợ tất cả thiết bị Mobile</div>
+        <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Hỗ trợ 24/7 · Bảo đảm an toàn tài khoản tuyệt đối</div>
+        <div class="feature-item"><div class="check"><i class="fa-solid fa-check"></i></div> Liên Hệ Zalo: 0379435045 Để Múc Đồ Chơi Vip</div>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="screen" id="dashboard">
+    <div class="info-banner">
+        <img class="banner-logo-img"
+             src="https://sf-static.upanhlaylink.com/img/image_20260313c8e5ff3531d34404575f229fe201d9ac.jpg"
+             onerror="this.src='https://ui-avatars.com/api/?name=VIP&background=cc0000&color=fff&size=200'"
+             alt="Logo">
+        <div class="banner-info">
+            <div class="banner-title">AIMLOCK SUPER V2</div>
+            <div class="mini-checks">
+                <div class="mini-check-item"><i class="fa-solid fa-check"></i> Trạng thái: Hoạt động</div>
+                <div class="mini-check-item"><i class="fa-solid fa-check" id="banner-expiry-icon"></i> <span id="banner-expiry-text">Key hợp lệ · Vĩnh viễn</span></div>
+                <div class="mini-check-item"><i class="fa-solid fa-check"></i> Server: Online · Ping 12ms</div>
             </div>
         </div>
     </div>
 
-    <script>
-    /* ════════════════════════════════════════════════
-       FIREBASE CONFIG — THAY BẰNG CONFIG DỰ ÁN CỦA BẠN
-       Vào Firebase Console → Project Settings → Your apps
-    ════════════════════════════════════════════════ */
-    const firebaseConfig = {
-        apiKey: "AIzaSyCSC-b_f-F4WbjDaQIjrIwtvJdjawaccOk",
-  authDomain: "aimlocksuperv2.firebaseapp.com",
-  projectId: "aimlocksuperv2",
-  storageBucket: "aimlocksuperv2.firebasestorage.app",
-  messagingSenderId: "692606090999",
-  appId: "1:692606090999:web:1444aed8ba22eea38f1df2"
-    };
+    <div class="key-info-box" id="key-info-box">
+        <i class="fa-solid fa-shield-keyhole"></i>
+        <div class="key-info-detail">
+            <div style="font-size:10px;margin-bottom:2px;">KEY ĐANG SỬ DỤNG</div>
+            <div class="key-info-val" id="key-info-val">••••••••••••</div>
+            <div id="key-info-expire" style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:2px;"></div>
+        </div>
+        <i class="fa-solid fa-circle-check" style="color:var(--green);font-size:18px;"></i>
+    </div>
 
-    /* ══ KHỞI TẠO FIREBASE ══ */
-    let db = null;
-    let firebaseReady = false;
+    <div class="section-label"><i class="fa-solid fa-sliders" style="color:var(--red);"></i> Function Home</div>
 
-    try {
-        firebase.initializeApp(firebaseConfig);
-        db = firebase.database();
-        firebaseReady = true;
-    } catch(e) {
-        console.warn('Firebase init error:', e);
+    <div class="cards-list">
+        <div class="feat-row" id="card-1">
+            <div class="row-icon"><i class="fa-solid fa-crosshairs"></i></div>
+            <div class="row-text"><div class="row-label">Aimlock Super 1.0.tsc</div><div class="row-desc">Hỗ Trợ Kéo Tâm Tăng Tỉ Lệ Hessot 75%</div></div>
+            <div class="row-right">
+                <div class="status-pill" id="pill-1">OFF</div>
+                <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-1','Aimlock Super 1.0.tsc','fa-crosshairs')"><span class="mini-slider"></span></label>
+            </div>
+        </div>
+        <div class="feat-row" id="card-2">
+            <div class="row-icon"><i class="fa-solid fa-bullseye"></i></div>
+            <div class="row-text"><div class="row-label">Aotuhesot Head</div><div class="row-desc">Hỗ trợ khóa Đầu Khi Kéo Tâm</div></div>
+            <div class="row-right">
+                <div class="status-pill" id="pill-2">OFF</div>
+                <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-2','Aotuhesot Head','fa-bullseye')"><span class="mini-slider"></span></label>
+            </div>
+        </div>
+        <div class="feat-row" id="card-3">
+            <div class="row-icon"><i class="fa-solid fa-rocket"></i></div>
+            <div class="row-text"><div class="row-label">Boost System</div><div class="row-desc">Tăng tốc độ di chuyển nhân vật</div></div>
+            <div class="row-right">
+                <div class="status-pill" id="pill-3">OFF</div>
+                <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-3','Boost System','fa-rocket')"><span class="mini-slider"></span></label>
+            </div>
+        </div>
+        <div class="feat-row" id="card-4">
+            <div class="row-icon"><i class="fa-solid fa-mobile"></i></div>
+            <div class="row-text"><div class="row-label">Touch Screen</div><div class="row-desc">Tốc Độ Trượt Màn Hình Nhanh Hơn</div></div>
+            <div class="row-right">
+                <div class="status-pill" id="pill-4">OFF</div>
+                <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-4','Touch Screen','fa-mobile')"><span class="mini-slider"></span></label>
+            </div>
+        </div>
+        <div class="feat-row" id="card-5">
+            <div class="row-icon"><i class="fa-solid fa-gauge-high"></i></div>
+            <div class="row-text"><div class="row-label">Fix Lag</div><div class="row-desc">Loại bỏ lag, tối ưu FPS tối đa</div></div>
+            <div class="row-right">
+                <div class="status-pill" id="pill-5">OFF</div>
+                <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-5','Fix Lag','fa-gauge-high')"><span class="mini-slider"></span></label>
+            </div>
+        </div>
+        <div class="feat-row" id="card-6">
+            <div class="row-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <div class="row-text"><div class="row-label">Dipi Prerium</div><div class="row-desc">Nhẹ Nhàng Khi Kéo Tâm Tất Cả Loại Súng</div></div>
+            <div class="row-right">
+                <div class="status-pill" id="pill-6">OFF</div>
+                <label class="mini-switch"><input type="checkbox" onchange="toggleCard(this,'card-6','Dipi Prerium','fa-user-shield')"><span class="mini-slider"></span></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="module-section-label">
+        <i class="fa-solid fa-terminal" style="color:var(--cyan);"></i> MODULE AIMLOCK SUPER
+    </div>
+
+    <div class="module-card">
+        <div class="module-header">
+            <div class="module-header-left">
+                <div class="module-header-icon"><i class="fa-solid fa-code"></i></div>
+                <div>
+                    <div class="module-title-text">Gun Config Injector</div>
+                    <div class="module-title-sub">v3.2.1 · All weapons supported</div>
+                </div>
+            </div>
+            <button class="btn-run" id="btn-run" onclick="runModule()">
+                <i class="fa-solid fa-play" id="run-icon"></i>
+                <span id="run-label">Chạy Module</span>
+            </button>
+        </div>
+        <div class="terminal-box" id="terminal-box">
+            <div class="terminal-inner" id="terminal-output"></div>
+        </div>
+    </div>
+
+    <button class="btn-logout" onclick="doLogout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+    </button>
+</div>
+
+<!-- ACTIVATION MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal-box" id="modal-box">
+        <div class="orbit-ring">
+            <div class="orbit-center" id="modal-icon"><i class="fa-solid fa-crosshairs"></i></div>
+        </div>
+        <div class="modal-title" id="modal-title">Đang kích Hoạt...</div>
+        <div class="modal-sub" id="modal-sub">Anti Recoil</div>
+        <div class="step-list" id="step-list">
+            <div class="step-item" id="step-0"><div class="step-dot"></div> Khởi tạo module...</div>
+            <div class="step-item" id="step-1"><div class="step-dot"></div> Nạp cấu hình...</div>
+            <div class="step-item" id="step-2"><div class="step-dot"></div> Bypass bảo vệ...</div>
+            <div class="step-item" id="step-3"><div class="step-dot"></div> Áp dụng hoàn tất!</div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   FIREBASE CONFIG
+═══════════════════════════════════════════════ */
+const firebaseConfig = {
+    apiKey: "AIzaSyCSC-b_f-F4WbjDaQIjrIwtvJdjawaccOk",
+    authDomain: "aimlocksuperv2.firebaseapp.com",
+    databaseURL: "https://aimlocksuperv2-default-rtdb.firebaseio.com",
+    projectId: "aimlocksuperv2",
+    storageBucket: "aimlocksuperv2.firebasestorage.app",
+    messagingSenderId: "692606090999",
+    appId: "1:692606090999:web:1444aed8ba22eea38f1df2"
+};
+
+let db = null;
+let firebaseReady = false;
+
+try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    firebaseReady = true;
+} catch(e) {
+    console.warn('Firebase init error:', e);
+}
+
+/* ═══════════════════════════════════════════════
+   CONSTANTS
+═══════════════════════════════════════════════ */
+const LS_SAVED_KEY  = 'vip_saved_key';
+const LS_KEY_DATA   = 'vip_key_data';
+
+/* ═══════════════════════════════════════════════
+   DEVICE ID
+═══════════════════════════════════════════════ */
+function getDeviceId() {
+    let did = localStorage.getItem('_device_id');
+    if (!did) {
+        const arr = new Uint8Array(16);
+        crypto.getRandomValues(arr);
+        did = Array.from(arr).map(b => b.toString(16).padStart(2,'0')).join('');
+        localStorage.setItem('_device_id', did);
     }
+    return did;
+}
+const DEVICE_ID = getDeviceId();
 
-    /* ════════════════════════════════════════════════
-       DEVICE ID — tạo ID thiết bị duy nhất & lưu local
-    ════════════════════════════════════════════════ */
-    function getDeviceId() {
-        let did = localStorage.getItem('_device_id');
-        if (!did) {
-            const arr = new Uint8Array(16);
-            crypto.getRandomValues(arr);
-            did = Array.from(arr).map(b => b.toString(16).padStart(2,'0')).join('');
-            localStorage.setItem('_device_id', did);
-        }
-        return did;
-    }
-    const DEVICE_ID = getDeviceId();
+/* ═══════════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════════ */
+function keyToPath(k) {
+    return k.replace(/\./g,'_').replace(/#/g,'_').replace(/\$/g,'_').replace(/\[/g,'_').replace(/\]/g,'_').replace(/\//g,'_');
+}
 
-    /* ════════════════════════════════════════════════
-       STORAGE KEYS
-    ════════════════════════════════════════════════ */
-    const LS_SAVED_KEY  = 'vip_saved_key';
-    const LS_HIDE_KEY   = 'vip_hide_until';
-    const LS_KEY_DATA   = 'vip_key_data';
+function formatDate(ts) {
+    if (!ts) return 'Vĩnh viễn';
+    const d = new Date(ts);
+    const pad = n => String(n).padStart(2,'0');
+    return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
 
-    /* ════════════════════════════════════════════════
-       PARTICLES
-    ════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   PARTICLES
+═══════════════════════════════════════════════ */
+(function(){
     const canvas = document.getElementById('particles-canvas');
     const ctx = canvas.getContext('2d');
-    let W = canvas.width = window.innerWidth, H = canvas.height = window.innerHeight;
-    window.addEventListener('resize',()=>{ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; });
+    let W, H, particles = [];
 
-    class Particle {
-        constructor(){ this.init(); }
-        init(){
-            this.x=Math.random()*W; this.y=Math.random()*H;
-            this.r=Math.random()*2.2+0.4;
-            this.vx=(Math.random()-0.5)*0.7; this.vy=(Math.random()-0.5)*0.7;
-            this.a=Math.random()*0.65+0.2;
-        }
-        update(){ this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>W||this.y<0||this.y>H) this.init(); }
-        draw(){
-            ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-            ctx.fillStyle=`rgba(255,26,26,${this.a})`;
-            ctx.shadowBlur=6; ctx.shadowColor='rgba(255,0,0,0.8)';
-            ctx.fill(); ctx.shadowBlur=0;
-        }
-    }
-    const pts = Array.from({length:100},()=>new Particle());
-    function drawLines(){
-        for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
-            const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
-            if(d<90){ ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.strokeStyle=`rgba(255,26,26,${0.13*(1-d/90)})`; ctx.lineWidth=0.5; ctx.stroke(); }
-        }
-    }
-    function animate(){ ctx.clearRect(0,0,W,H); pts.forEach(p=>{p.update();p.draw();}); drawLines(); requestAnimationFrame(animate); }
-    animate();
+    function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
 
-    /* ════════════════════════════════════════════════
-       TOAST
-    ════════════════════════════════════════════════ */
-    function showToast(msg, icon='fa-circle-check', color='#00e676') {
-        const wrap = document.getElementById('toast-wrap');
-        const t = document.createElement('div'); t.className='toast';
-        t.innerHTML = `<i class="fa-solid ${icon}" style="color:${color}"></i>${msg}`;
-        wrap.appendChild(t);
-        setTimeout(()=>{ if(t.parentElement) t.remove(); }, 2800);
+    for(let i=0; i<55; i++) {
+        particles.push({
+            x: Math.random()*1920, y: Math.random()*1080,
+            r: Math.random()*1.4+0.4,
+            dx: (Math.random()-0.5)*0.35,
+            dy: (Math.random()-0.5)*0.35,
+            a: Math.random()
+        });
     }
 
-    /* ════════════════════════════════════════════════
-       FIREBASE CONNECTION STATUS
-    ════════════════════════════════════════════════ */
-    function setFbStatus(connected) {
-        const dot  = document.getElementById('fb-dot');
-        const text = document.getElementById('fb-status-text');
-        if (!dot || !text) return;
-        if (connected) {
+    function draw(){
+        ctx.clearRect(0,0,W,H);
+        particles.forEach(p => {
+            p.x += p.dx; p.y += p.dy;
+            if(p.x<0) p.x=W; if(p.x>W) p.x=0;
+            if(p.y<0) p.y=H; if(p.y>H) p.y=0;
+            p.a += 0.008;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+            ctx.fillStyle = `rgba(255,26,26,${0.18+0.14*Math.sin(p.a)})`;
+            ctx.fill();
+        });
+        requestAnimationFrame(draw);
+    }
+    draw();
+})();
+
+/* ═══════════════════════════════════════════════
+   FIREBASE STATUS
+═══════════════════════════════════════════════ */
+if (firebaseReady && db) {
+    db.ref('.info/connected').on('value', snap => {
+        const dot = document.getElementById('fb-dot');
+        const txt = document.getElementById('fb-status-text');
+        if (snap.val() === true) {
             dot.classList.add('connected');
-            text.textContent = 'Sever: Đã kết nối';
+            txt.textContent = 'Firebase: Đã kết nối';
         } else {
             dot.classList.remove('connected');
-            text.textContent = 'Sever: Mất kết nối';
+            txt.textContent = 'Firebase: Mất kết nối';
         }
-    }
-
-    if (firebaseReady && db) {
-        db.ref('.info/connected').on('value', snap => {
-            setFbStatus(snap.val() === true);
-        });
-    } else {
-        setFbStatus(false);
-    }
-
-    /* ════════════════════════════════════════════════
-       TOGGLE EYE (hiện/ẩn key)
-    ════════════════════════════════════════════════ */
-    function toggleEye() {
-        const inp = document.getElementById('key-input');
-        const eye = document.getElementById('eye-toggle');
-        if (inp.type === 'password') {
-            inp.type = 'text';
-            eye.className = 'fa-solid fa-eye-slash eye-toggle';
-        } else {
-            inp.type = 'password';
-            eye.className = 'fa-solid fa-eye eye-toggle';
-        }
-    }
-
-    /* ════════════════════════════════════════════════
-       WELCOME MODAL
-    ════════════════════════════════════════════════ */
-    (function(){
-        const h = localStorage.getItem(LS_HIDE_KEY);
-        if (h && Date.now() < parseInt(h)) {
-            document.getElementById('welcome-overlay').style.display='none';
-        }
-    })();
-
-    function closeWelcome(forMin) {
-        if (forMin) {
-            localStorage.setItem(LS_HIDE_KEY, Date.now() + 3*60*1000);
-            showToast('Đã đóng trong 3 phút','fa-clock','#aaa');
-        }
-        const ov = document.getElementById('welcome-overlay');
-        ov.classList.add('hiding');
-        setTimeout(()=>{ ov.style.display='none'; ov.classList.remove('hiding'); }, 400);
-    }
-
-    function copyLink() {
-        const inp   = document.getElementById('key-link-input');
-        const btn   = document.getElementById('btn-copy-link');
-        const icon  = document.getElementById('copy-icon');
-        const label = document.getElementById('copy-label');
-        navigator.clipboard.writeText(inp.value).catch(()=>{ inp.select(); document.execCommand('copy'); });
-        btn.classList.add('copied'); icon.className='fa-solid fa-check'; label.textContent='ĐÃ COPY';
-        showToast('Đã sao chép link!','fa-copy','#00e676');
-        setTimeout(()=>{ btn.classList.remove('copied'); icon.className='fa-solid fa-copy'; label.textContent='COPY'; }, 2500);
-    }
-
-    /* ════════════════════════════════════════════════
-       HELPER — sanitize key thành Firebase path-safe
-       Firebase key không cho . # $ [ ]
-    ════════════════════════════════════════════════ */
-    function keyToPath(k) {
-        return k.replace(/[.#$\[\]]/g, '_');
-    }
-
-    /* ════════════════════════════════════════════════
-       FORMAT NGÀY GIỜ
-    ════════════════════════════════════════════════ */
-    function formatDate(ts) {
-        if (!ts) return 'Vĩnh viễn';
-        const d = new Date(ts);
-        return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
-    }
-
-    function timeLeft(ts) {
-        if (!ts) return 'Vĩnh viễn';
-        const diff = ts - Date.now();
-        if (diff <= 0) return 'Đã hết hạn';
-        const days  = Math.floor(diff / 86400000);
-        const hours = Math.floor((diff % 86400000) / 3600000);
-        const mins  = Math.floor((diff % 3600000) / 60000);
-        if (days > 0)  return `Còn ${days} ngày ${hours} giờ`;
-        if (hours > 0) return `Còn ${hours} giờ ${mins} phút`;
-        return `Còn ${mins} phút`;
-    }
-
-    /* ════════════════════════════════════════════════
-       CẬP NHẬT UI DASHBOARD SAU KHI ĐĂNG NHẬP
-    ════════════════════════════════════════════════ */
-    function updateDashboardUI(keyVal, keyData) {
-        // Banner expiry
-        const expiresAt   = keyData.expiresAt || null;
-        const expiryText  = document.getElementById('banner-expiry-text');
-        const expiryIcon  = document.getElementById('banner-expiry-icon');
-        const keyInfoVal  = document.getElementById('key-info-val');
-        const keyInfoExp  = document.getElementById('key-info-expire');
-
-        const displayKey  = keyVal.length > 12
-            ? keyVal.substring(0, 6) + '••••' + keyVal.slice(-4)
-            : keyVal;
-
-        if (keyInfoVal) keyInfoVal.textContent = displayKey;
-
-        if (!expiresAt) {
-            if (expiryText) expiryText.textContent = 'Key hợp lệ · Vĩnh viễn';
-            if (expiryIcon) { expiryIcon.className = 'fa-solid fa-check'; expiryIcon.style.color = ''; }
-            if (keyInfoExp) keyInfoExp.textContent = 'Hạn: Vĩnh viễn';
-        } else {
-            const left = timeLeft(expiresAt);
-            const isExpiringSoon = (expiresAt - Date.now()) < 86400000 * 3; // < 3 ngày
-            if (expiryText) expiryText.textContent = `Key · ${left}`;
-            if (expiryIcon) {
-                if (isExpiringSoon) {
-                    expiryIcon.className = 'fa-solid fa-clock yellow';
-                    expiryIcon.style.color = 'var(--yellow)';
-                } else {
-                    expiryIcon.className = 'fa-solid fa-check';
-                    expiryIcon.style.color = '';
-                }
-            }
-            if (keyInfoExp) keyInfoExp.textContent = `Hết hạn: ${formatDate(expiresAt)}`;
-        }
-
-        // Note nếu có
-        if (keyData.note) {
-            showToast(`Ghi chú: ${keyData.note}`, 'fa-note-sticky', '#ffd600');
-        }
-    }
-
-    /* ════════════════════════════════════════════════
-       CHUYỂN MÀN HÌNH
-    ════════════════════════════════════════════════ */
-    function goToDashboard(keyVal, keyData) {
-        updateDashboardUI(keyVal, keyData);
-        document.getElementById('login-screen').classList.remove('active');
-        document.getElementById('dashboard').classList.add('active');
-        // Ẩn welcome nếu đang hiện
-        const ov = document.getElementById('welcome-overlay');
-        if (ov && ov.style.display !== 'none') closeWelcome(false);
-    }
-
-    function goToLogin() {
-        document.getElementById('dashboard').classList.remove('active');
-        document.getElementById('login-screen').classList.add('active');
-    }
-
-    /* ════════════════════════════════════════════════
-       KIỂM TRA KEY VÀ ĐĂNG KÝ THIẾT BỊ TRÊN FIREBASE
-    ════════════════════════════════════════════════ */
-    async function verifyKeyFirebase(keyVal) {
-        if (!firebaseReady || !db) {
-            throw new Error('Sever chưa kết nối. !');
-        }
-
-        const path    = keyToPath(keyVal);
-        const keyRef  = db.ref('keys/' + path);
-        const snap    = await keyRef.once('value');
-
-        if (!snap.exists()) {
-            throw new Error('Key không tồn tại!');
-        }
-
-        const data = snap.val();
-
-        // Kiểm tra active
-        if (data.active === false) {
-            throw new Error('Key đã bị vô hiệu hóa!');
-        }
-
-        // Kiểm tra hạn sử dụng
-        if (data.expiresAt && Date.now() > data.expiresAt) {
-            throw new Error('Key đã hết hạn!');
-        }
-
-        // Kiểm tra số thiết bị tối đa
-        const maxDevices = data.maxDevices || 1;
-        const devices    = data.devices || {};
-        const deviceIds  = Object.keys(devices);
-
-        const alreadyRegistered = deviceIds.includes(DEVICE_ID);
-
-        if (!alreadyRegistered && deviceIds.length >= maxDevices) {
-            throw new Error(`Key đã đăng ký tối đa ${maxDevices} thiết bị!`);
-        }
-
-        // Đăng ký / cập nhật thiết bị
-        const now = Date.now();
-        const deviceData = {
-            lastLogin : now,
-            userAgent : navigator.userAgent.substring(0, 200)
-        };
-        if (!alreadyRegistered) {
-            deviceData.firstLogin = now;
-        } else {
-            deviceData.firstLogin = devices[DEVICE_ID].firstLogin || now;
-        }
-
-        await keyRef.child('devices/' + DEVICE_ID).set(deviceData);
-
-        return data;
-    }
-
-    /* ════════════════════════════════════════════════
-       AUTO-LOGIN: Kiểm tra key đã lưu khi mở app
-    ════════════════════════════════════════════════ */
-    async function checkAutoLogin() {
-        const savedKey = localStorage.getItem(LS_SAVED_KEY);
-
-        if (!savedKey) {
-            // Không có key đã lưu → hiện login
-            hideSplash();
-            return;
-        }
-
-        // Có key đã lưu → thử xác thực lại
-        try {
-            let keyData;
-            if (firebaseReady && db) {
-                keyData = await verifyKeyFirebase(savedKey);
-            } else {
-                // Offline fallback: dùng cached data
-                const cached = localStorage.getItem(LS_KEY_DATA);
-                if (cached) {
-                    keyData = JSON.parse(cached);
-                    // Kiểm tra hạn sử dụng từ cache
-                    if (keyData.expiresAt && Date.now() > keyData.expiresAt) {
-                        throw new Error('Key đã hết hạn!');
-                    }
-                } else {
-                    throw new Error('Không thể xác thực offline!');
-                }
-            }
-
-            // Cache key data
-            localStorage.setItem(LS_KEY_DATA, JSON.stringify(keyData));
-            hideSplash();
-
-            // Kiểm tra expiry ngay cả sau auto-login
-            if (keyData.expiresAt && Date.now() > keyData.expiresAt) {
-                showBlockedOverlay('Key của bạn đã hết hạn!');
-                return;
-            }
-
-            goToDashboard(savedKey, keyData);
-
-        } catch(e) {
-            // Key lỗi → xóa saved key và quay về login
-            localStorage.removeItem(LS_SAVED_KEY);
-            localStorage.removeItem(LS_KEY_DATA);
-            hideSplash();
-            // Không báo lỗi nếu chỉ là lỗi kết nối
-            if (e.message && !e.message.includes('kết nối') && !e.message.includes('fetch')) {
-                showToast(e.message || 'Key không còn hợp lệ!', 'fa-circle-xmark', '#ff4444');
-            }
-        }
-    }
-
-    function hideSplash() {
-        const s = document.getElementById('splash-screen');
-        if (s) s.classList.add('hidden');
-    }
-
-    /* ════════════════════════════════════════════════
-       ĐĂNG NHẬP (Firebase)
-    ════════════════════════════════════════════════ */
-    document.getElementById('key-input').addEventListener('keydown', e => {
-        if (e.key === 'Enter') doLogin();
     });
+}
 
-    async function doLogin() {
-        const val  = document.getElementById('key-input').value.trim();
-        const err  = document.getElementById('err-msg');
-        const errT = document.getElementById('err-text');
-        const inp  = document.getElementById('key-input');
-        const btn  = document.getElementById('btn-login');
+/* ═══════════════════════════════════════════════
+   LOAD MODAL LINK TỪ FIREBASE (REAL-TIME)
+═══════════════════════════════════════════════ */
+function loadModalLink() {
+    if (!firebaseReady || !db) return;
+    db.ref('settings/modalLink').on('value', snap => {
+        const data = snap.val();
+        const inp = document.getElementById('key-link-input');
+        if (data && data.url) {
+            inp.value = data.url;
+        }
+        if (data && data.title) {
+            document.getElementById('welcome-headline').innerHTML = data.title;
+        }
+        if (data && data.badge) {
+            document.getElementById('welcome-badge-text').textContent = data.badge;
+        }
+        if (data && data.desc) {
+            document.getElementById('welcome-desc').innerHTML = data.desc;
+        }
+    });
+}
+loadModalLink();
 
-        if (!val) {
-            showError('Vui lòng nhập key!');
-            shakeInput(inp);
+/* ═══════════════════════════════════════════════
+   WELCOME MODAL CLOSE
+═══════════════════════════════════════════════ */
+let welcomeTimerInterval = null;
+let welcomeCountdown = 180;
+
+function startWelcomeTimer() {
+    const btn = document.getElementById('close-timer-text');
+    welcomeCountdown = 180;
+    clearInterval(welcomeTimerInterval);
+    welcomeTimerInterval = setInterval(() => {
+        welcomeCountdown--;
+        if (btn) btn.textContent = `Đóng (${welcomeCountdown}s)`;
+        if (welcomeCountdown <= 0) {
+            clearInterval(welcomeTimerInterval);
+            closeWelcome(false);
+        }
+    }, 1000);
+}
+
+function closeWelcome(withTimer) {
+    clearInterval(welcomeTimerInterval);
+    const ov = document.getElementById('welcome-overlay');
+    ov.classList.add('hiding');
+    setTimeout(() => { ov.style.display = 'none'; ov.classList.remove('hiding'); }, 400);
+}
+
+/* ═══════════════════════════════════════════════
+   COPY LINK
+═══════════════════════════════════════════════ */
+function copyLink() {
+    const inp = document.getElementById('key-link-input');
+    const btn = document.getElementById('btn-copy-link');
+    const icon = document.getElementById('copy-icon');
+    const lbl  = document.getElementById('copy-label');
+    navigator.clipboard.writeText(inp.value).then(() => {
+        btn.classList.add('copied');
+        icon.className = 'fa-solid fa-check';
+        lbl.textContent = 'COPIED!';
+        showToast('Đã sao chép link!', 'fa-copy', '#00e676');
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            icon.className = 'fa-solid fa-copy';
+            lbl.textContent = 'COPY';
+        }, 2000);
+    }).catch(() => {
+        inp.select(); document.execCommand('copy');
+        showToast('Đã copy!', 'fa-copy', '#00e676');
+    });
+}
+
+/* ═══════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════ */
+function showToast(msg, icon, color) {
+    const wrap = document.getElementById('toast-wrap');
+    const el   = document.createElement('div');
+    el.className = 'toast';
+    el.style.borderColor = color + '88';
+    el.innerHTML = `<i class="fa-solid ${icon}" style="color:${color}"></i>${msg}`;
+    wrap.appendChild(el);
+    setTimeout(() => el.remove(), 3000);
+}
+
+/* ═══════════════════════════════════════════════
+   EYE TOGGLE
+═══════════════════════════════════════════════ */
+function toggleEye() {
+    const inp = document.getElementById('key-input');
+    const eye = document.getElementById('eye-toggle');
+    if (inp.type === 'password') {
+        inp.type = 'text';
+        eye.className = 'fa-solid fa-eye-slash eye-toggle';
+    } else {
+        inp.type = 'password';
+        eye.className = 'fa-solid fa-eye eye-toggle';
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   DASHBOARD UI
+═══════════════════════════════════════════════ */
+function updateDashboardUI(keyVal, keyData) {
+    document.getElementById('key-info-val').textContent = keyVal;
+
+    const expEl  = document.getElementById('key-info-expire');
+    const banExp = document.getElementById('banner-expiry-text');
+    const banIco = document.getElementById('banner-expiry-icon');
+
+    if (!keyData.expiresAt) {
+        expEl.textContent  = 'Hạn dùng: Vĩnh viễn';
+        banExp.textContent = 'Key hợp lệ · Vĩnh viễn';
+        banIco.className   = 'fa-solid fa-infinity';
+        banIco.style.color = 'var(--green)';
+    } else {
+        const left = keyData.expiresAt - Date.now();
+        const days = Math.max(0, Math.floor(left / 86400000));
+        expEl.textContent  = `Hết hạn: ${formatDate(keyData.expiresAt)}`;
+        if (days > 3) {
+            banExp.textContent = `Key hợp lệ · Còn ${days} ngày`;
+            banIco.style.color = 'var(--green)';
+        } else if (days > 0) {
+            banExp.textContent = `Sắp hết hạn · Còn ${days} ngày`;
+            banIco.className   = 'fa-solid fa-triangle-exclamation yellow';
+            banIco.style.color = 'var(--yellow)';
+        } else {
+            const hrs = Math.max(0, Math.floor(left / 3600000));
+            banExp.textContent = `Sắp hết hạn · Còn ${hrs} giờ`;
+            banIco.className   = 'fa-solid fa-triangle-exclamation';
+            banIco.style.color = 'var(--red)';
+        }
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   SCREEN SWITCH
+═══════════════════════════════════════════════ */
+function goToDashboard(keyVal, keyData) {
+    updateDashboardUI(keyVal, keyData);
+    document.getElementById('login-screen').classList.remove('active');
+    document.getElementById('dashboard').classList.add('active');
+    const ov = document.getElementById('welcome-overlay');
+    if (ov && ov.style.display !== 'none') closeWelcome(false);
+}
+
+function goToLogin() {
+    document.getElementById('dashboard').classList.remove('active');
+    document.getElementById('login-screen').classList.add('active');
+}
+
+/* ═══════════════════════════════════════════════
+   VERIFY KEY ON FIREBASE
+═══════════════════════════════════════════════ */
+async function verifyKeyFirebase(keyVal) {
+    if (!firebaseReady || !db) throw new Error('Server chưa kết nối!');
+    const path   = keyToPath(keyVal);
+    const keyRef = db.ref('keys/' + path);
+    const snap   = await keyRef.once('value');
+
+    if (!snap.exists()) throw new Error('Key không tồn tại!');
+
+    const data = snap.val();
+    if (data.active === false) throw new Error('Key đã bị vô hiệu hóa!');
+    if (data.expiresAt && Date.now() > data.expiresAt) throw new Error('Key đã hết hạn!');
+
+    const maxDevices = data.maxDevices || 1;
+    const devices    = data.devices || {};
+    const deviceIds  = Object.keys(devices);
+    const alreadyReg = deviceIds.includes(DEVICE_ID);
+
+    if (!alreadyReg && deviceIds.length >= maxDevices) {
+        throw new Error(`Key đã đăng ký tối đa ${maxDevices} thiết bị!`);
+    }
+
+    const now        = Date.now();
+    const deviceData = {
+        lastLogin : now,
+        userAgent : navigator.userAgent.substring(0, 200)
+    };
+    deviceData.firstLogin = alreadyReg ? (devices[DEVICE_ID].firstLogin || now) : now;
+
+    await keyRef.child('devices/' + DEVICE_ID).set(deviceData);
+    return data;
+}
+
+/* ═══════════════════════════════════════════════
+   AUTO LOGIN
+═══════════════════════════════════════════════ */
+async function checkAutoLogin() {
+    const savedKey = localStorage.getItem(LS_SAVED_KEY);
+    if (!savedKey) { hideSplash(); return; }
+
+    try {
+        let keyData;
+        if (firebaseReady && db) {
+            keyData = await verifyKeyFirebase(savedKey);
+        } else {
+            const cached = localStorage.getItem(LS_KEY_DATA);
+            if (cached) {
+                keyData = JSON.parse(cached);
+                if (keyData.expiresAt && Date.now() > keyData.expiresAt) throw new Error('Key đã hết hạn!');
+            } else {
+                throw new Error('Không thể xác thực offline!');
+            }
+        }
+        localStorage.setItem(LS_KEY_DATA, JSON.stringify(keyData));
+        hideSplash();
+        if (keyData.expiresAt && Date.now() > keyData.expiresAt) {
+            showBlockedOverlay('Key của bạn đã hết hạn!');
             return;
         }
-
-        // Disable button, hiện loading
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin li-icon-left"></i> ĐANG XÁC THỰC... <i class="fa-solid fa-chevron-right li-icon-right"></i>';
-
-        try {
-            let keyData;
-
-            if (firebaseReady && db) {
-                keyData = await verifyKeyFirebase(val);
-            } else {
-                throw new Error('Firebase chưa kết nối. Kiểm tra config Firebase!');
-            }
-
-            // Đăng nhập thành công
-            err.style.display = 'none';
-
-            // Lưu key vào localStorage
-            localStorage.setItem(LS_SAVED_KEY, val);
-            localStorage.setItem(LS_KEY_DATA, JSON.stringify(keyData));
-
-            showToast('Đăng nhập thành công! Chào mừng bạn 🔥', 'fa-shield-halved', '#ff1a1a');
-
-            setTimeout(() => {
-                goToDashboard(val, keyData);
-                resetLoginBtn();
-            }, 600);
-
-        } catch(e) {
-            resetLoginBtn();
-            showError(e.message || 'Lỗi không xác định!');
-            shakeInput(inp);
-        }
-    }
-
-    function showError(msg) {
-        const err  = document.getElementById('err-msg');
-        const errT = document.getElementById('err-text');
-        errT.textContent = msg;
-        err.style.display = 'flex';
-    }
-
-    function shakeInput(inp) {
-        inp.style.borderColor = '#ff1a1a';
-        inp.style.boxShadow = '0 0 18px rgba(255,26,26,0.5)';
-        inp.animate([
-            {transform:'translateX(-5px)'},
-            {transform:'translateX(5px)'},
-            {transform:'translateX(-4px)'},
-            {transform:'translateX(4px)'},
-            {transform:'translateX(0)'}
-        ], {duration:350});
-        setTimeout(()=>{ inp.style.borderColor=''; inp.style.boxShadow=''; }, 1200);
-    }
-
-    function resetLoginBtn() {
-        const btn = document.getElementById('btn-login');
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-fingerprint li-icon-left"></i> ĐĂNG NHẬP <i class="fa-solid fa-chevron-right li-icon-right"></i>';
-    }
-
-    /* ════════════════════════════════════════════════
-       ĐĂNG XUẤT
-    ════════════════════════════════════════════════ */
-    function doLogout() {
+        goToDashboard(savedKey, keyData);
+    } catch(e) {
         localStorage.removeItem(LS_SAVED_KEY);
         localStorage.removeItem(LS_KEY_DATA);
-        document.getElementById('blocked-overlay').classList.remove('show');
-        showToast('Đã đăng xuất!', 'fa-right-from-bracket', '#aaa');
-        goToLogin();
-        document.getElementById('key-input').value = '';
-        document.getElementById('err-msg').style.display = 'none';
-    }
-
-    /* ════════════════════════════════════════════════
-       HIỆN OVERLAY KEY HẾT HẠN / BỊ KHÓA
-    ════════════════════════════════════════════════ */
-    function showBlockedOverlay(msg) {
-        const ov  = document.getElementById('blocked-overlay');
-        const txt = document.getElementById('blocked-msg');
-        txt.textContent = msg || 'Key của bạn đã hết hạn hoặc bị vô hiệu hóa. Vui lòng liên hệ admin để gia hạn.';
-        ov.classList.add('show');
-    }
-
-    /* ════════════════════════════════════════════════
-       GIÁM SÁT KEY REAL-TIME SAU KHI ĐĂNG NHẬP
-       (Nếu admin vô hiệu hóa key → tự động logout)
-    ════════════════════════════════════════════════ */
-    let keyWatcher = null;
-
-    function startKeyWatcher(keyVal) {
-        if (!firebaseReady || !db) return;
-        stopKeyWatcher();
-
-        const path   = keyToPath(keyVal);
-        const keyRef = db.ref('keys/' + path);
-
-        keyWatcher = keyRef.on('value', snap => {
-            if (!snap.exists()) {
-                stopKeyWatcher();
-                localStorage.removeItem(LS_SAVED_KEY);
-                localStorage.removeItem(LS_KEY_DATA);
-                showBlockedOverlay('Key đã bị xóa khỏi hệ thống!');
-                return;
-            }
-            const data = snap.val();
-            if (data.active === false) {
-                stopKeyWatcher();
-                showBlockedOverlay('Key của bạn đã bị vô hiệu hóa bởi admin!');
-                return;
-            }
-            if (data.expiresAt && Date.now() > data.expiresAt) {
-                stopKeyWatcher();
-                showBlockedOverlay(`Key hết hạn lúc: ${formatDate(data.expiresAt)}`);
-                return;
-            }
-        });
-    }
-
-    function stopKeyWatcher() {
-        if (keyWatcher && firebaseReady && db) {
-            const savedKey = localStorage.getItem(LS_SAVED_KEY);
-            if (savedKey) {
-                db.ref('keys/' + keyToPath(savedKey)).off('value', keyWatcher);
-            }
-            keyWatcher = null;
+        hideSplash();
+        if (e.message && !e.message.includes('kết nối') && !e.message.includes('fetch')) {
+            showToast(e.message || 'Key không còn hợp lệ!', 'fa-circle-xmark', '#ff4444');
         }
     }
+}
 
-    /* ════════════════════════════════════════════════
-       CARD TOGGLE + MODAL
-    ════════════════════════════════════════════════ */
-    let mTimeout = null;
+function hideSplash() {
+    const s = document.getElementById('splash-screen');
+    if (s) s.classList.add('hidden');
+}
 
-    function toggleCard(checkbox, cardId, name, iconClass) {
-        const card = document.getElementById(cardId);
-        const pill = document.getElementById(cardId.replace('card-','pill-'));
-        if (checkbox.checked) {
-            showActivationModal(name, iconClass, ()=>{
-                card.classList.add('on');
-                pill.textContent = 'ON';
-                showToast(`${name} đã kích hoạt!`, 'fa-circle-check', '#ff1a1a');
-            });
+/* ═══════════════════════════════════════════════
+   LOGIN
+═══════════════════════════════════════════════ */
+document.getElementById('key-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+});
+
+async function doLogin() {
+    const val = document.getElementById('key-input').value.trim();
+    const inp = document.getElementById('key-input');
+    const btn = document.getElementById('btn-login');
+
+    if (!val) { showError('Vui lòng nhập key!'); shakeInput(inp); return; }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin li-icon-left"></i> ĐANG XÁC THỰC... <i class="fa-solid fa-chevron-right li-icon-right"></i>';
+
+    try {
+        let keyData;
+        if (firebaseReady && db) {
+            keyData = await verifyKeyFirebase(val);
         } else {
-            showDeactivateModal(name, iconClass, ()=>{
-                card.classList.remove('on');
-                pill.textContent = 'OFF';
-                showToast(`${name} đã tắt`, 'fa-circle-xmark', '#666');
-            });
+            throw new Error('Firebase chưa kết nối. Kiểm tra lại!');
         }
+        document.getElementById('err-msg').style.display = 'none';
+        localStorage.setItem(LS_SAVED_KEY, val);
+        localStorage.setItem(LS_KEY_DATA, JSON.stringify(keyData));
+        showToast('Đăng nhập thành công! Chào mừng bạn 🔥', 'fa-shield-halved', '#ff1a1a');
+        setTimeout(() => { goToDashboard(val, keyData); resetLoginBtn(); }, 600);
+    } catch(e) {
+        resetLoginBtn();
+        showError(e.message || 'Lỗi không xác định!');
+        shakeInput(inp);
     }
+}
 
-    function showActivationModal(name, iconClass, onDone) {
-        const ov    = document.getElementById('modal-overlay');
-        const box   = document.getElementById('modal-box');
-        const steps = document.querySelectorAll('.step-item');
-        box.classList.remove('deact');
-        document.getElementById('modal-icon').innerHTML  = `<i class="fa-solid ${iconClass}"></i>`;
-        document.getElementById('modal-title').textContent = 'Đang kích hoạt...';
-        document.getElementById('modal-sub').textContent   = name;
-        steps.forEach(s => s.classList.remove('done'));
-        ov.classList.add('show');
-        const d = 350;
-        steps.forEach((s, i) => setTimeout(()=>s.classList.add('done'), d*(i+1)));
-        clearTimeout(mTimeout);
-        mTimeout = setTimeout(()=>{
-            document.getElementById('modal-title').textContent = 'Kích hoạt thành công!';
-            setTimeout(()=>{ ov.classList.remove('show'); onDone(); }, 600);
-        }, d * steps.length + 400);
-    }
+function showError(msg) {
+    const err  = document.getElementById('err-msg');
+    document.getElementById('err-text').textContent = msg;
+    err.style.display = 'flex';
+}
 
-    function showDeactivateModal(name, iconClass, onDone) {
-        const ov    = document.getElementById('modal-overlay');
-        const box   = document.getElementById('modal-box');
-        const steps = document.querySelectorAll('.step-item');
-        box.classList.add('deact');
-        document.getElementById('modal-icon').innerHTML  = `<i class="fa-solid ${iconClass}"></i>`;
-        document.getElementById('modal-title').textContent = 'Đang tắt...';
-        document.getElementById('modal-sub').textContent   = name;
-        steps.forEach(s => s.classList.remove('done'));
-        const labels = ['Dừng module...','Xóa cấu hình...','Khôi phục hệ thống...','Hoàn tất!'];
-        steps.forEach((s, i) => { s.childNodes[1].textContent = ' ' + labels[i]; });
-        ov.classList.add('show');
-        const d = 300;
-        steps.forEach((s, i) => setTimeout(()=>s.classList.add('done'), d*(i+1)));
-        clearTimeout(mTimeout);
-        mTimeout = setTimeout(()=>{
-            document.getElementById('modal-title').textContent = 'Đã tắt thành công!';
-            setTimeout(()=>{
-                ov.classList.remove('show');
-                const orig = ['Khởi tạo module...','Nạp cấu hình...','Bypass bảo vệ...','Áp dụng hoàn tất!'];
-                steps.forEach((s, i) => { s.childNodes[1].textContent = ' ' + orig[i]; });
-                onDone();
-            }, 500);
-        }, d * steps.length + 350);
-    }
+function shakeInput(inp) {
+    inp.style.borderColor = '#ff1a1a';
+    inp.style.boxShadow = '0 0 18px rgba(255,26,26,0.5)';
+    inp.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}], {duration:350});
+    setTimeout(() => { inp.style.borderColor=''; inp.style.boxShadow=''; }, 1200);
+}
 
-    /* ════════════════════════════════════════════════
-       MODULE RUNNER
-    ════════════════════════════════════════════════ */
-    let moduleRunning = false, moduleTimers = [];
+function resetLoginBtn() {
+    const btn = document.getElementById('btn-login');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-fingerprint li-icon-left"></i> ĐĂNG NHẬP <i class="fa-solid fa-chevron-right li-icon-right"></i>';
+}
 
-    const GUNS = [
-        {name:'MP40',        cls:'red',    dmg:48,  spd:'★★★★★', type:'SMG'},
-        {name:'M4A1',        cls:'cyan',   dmg:56,  spd:'★★★★☆', type:'AR'},
-        {name:'AKM',         cls:'yellow', dmg:62,  spd:'★★★☆☆', type:'AR'},
-        {name:'AWM',         cls:'red',    dmg:105, spd:'★☆☆☆☆', type:'Sniper'},
-        {name:'SCAR-L',      cls:'cyan',   dmg:53,  spd:'★★★★☆', type:'AR'},
-        {name:'UMP45',       cls:'green',  dmg:44,  spd:'★★★★★', type:'SMG'},
-        {name:'Desert Eagle',cls:'yellow', dmg:71,  spd:'★★★☆☆', type:'Pistol'},
-        {name:'M24',         cls:'red',    dmg:88,  spd:'★★☆☆☆', type:'Sniper'},
-        {name:'P90',         cls:'green',  dmg:40,  spd:'★★★★★', type:'SMG'},
-        {name:'Kar98k',      cls:'yellow', dmg:94,  spd:'★★☆☆☆', type:'Sniper'},
-    ];
+/* ═══════════════════════════════════════════════
+   LOGOUT
+═══════════════════════════════════════════════ */
+function doLogout() {
+    localStorage.removeItem(LS_SAVED_KEY);
+    localStorage.removeItem(LS_KEY_DATA);
+    document.getElementById('blocked-overlay').classList.remove('show');
+    showToast('Đã đăng xuất!', 'fa-right-from-bracket', '#aaa');
+    goToLogin();
+    document.getElementById('key-input').value = '';
+    document.getElementById('err-msg').style.display = 'none';
+}
 
-    function clearMT(){ moduleTimers.forEach(t=>clearTimeout(t)); moduleTimers=[]; }
-    function mt(fn, ms){ const id=setTimeout(fn,ms); moduleTimers.push(id); }
+/* ═══════════════════════════════════════════════
+   BLOCKED OVERLAY
+═══════════════════════════════════════════════ */
+function showBlockedOverlay(msg) {
+    const ov = document.getElementById('blocked-overlay');
+    document.getElementById('blocked-msg').textContent = msg || 'Key đã hết hạn hoặc bị vô hiệu hóa.';
+    ov.classList.add('show');
+}
 
-    function addLine(html, delay){
-        mt(()=>{
-            const out = document.getElementById('terminal-output');
-            const el  = document.createElement('div'); el.className='term-line'; el.innerHTML=html;
-            out.appendChild(el); out.scrollTop=out.scrollHeight;
-        }, delay);
-    }
+/* ═══════════════════════════════════════════════
+   KEY WATCHER REAL-TIME
+═══════════════════════════════════════════════ */
+let keyWatcher = null;
 
-    function addProgLine(id, label, delay, fillDelay){
-        mt(()=>{
-            const out  = document.getElementById('terminal-output');
-            const wrap = document.createElement('div'); wrap.className='term-progress-wrap';
-            wrap.innerHTML=`<div class="term-line"><span class="term-prefix">▶</span> <span class="term-text-cyan">${label}</span></div><div class="term-progress-bar"><div class="term-progress-fill" id="${id}"></div></div>`;
-            out.appendChild(wrap); out.scrollTop=out.scrollHeight;
-        }, delay);
-        mt(()=>{ const b=document.getElementById(id); if(b) b.style.width='100%'; }, fillDelay);
-    }
-
-    function addGunRow(guns, delay){
-        mt(()=>{
-            const out = document.getElementById('terminal-output');
-            const row = document.createElement('div'); row.className='term-gun-row';
-            guns.forEach(g=>{ row.innerHTML+=`<span class="term-gun-icon ${g.cls}">🔫 ${g.name}</span>`; });
-            out.appendChild(row); out.scrollTop=out.scrollHeight;
-        }, delay);
-    }
-
-    function runModule(){
-        if(moduleRunning){ stopModule(); return; }
-        moduleRunning=true;
-        const btn  = document.getElementById('btn-run');
-        const icon = document.getElementById('run-icon');
-        const lbl  = document.getElementById('run-label');
-        const tBox = document.getElementById('terminal-box');
-        const tOut = document.getElementById('terminal-output');
-        btn.classList.add('running'); icon.className='fa-solid fa-stop'; lbl.textContent='Dừng Module';
-        tBox.classList.add('open'); tOut.innerHTML='';
-
-        let d=0; const INC=220;
-        addLine(`<span class="term-prefix">$</span><span class="term-text-cyan"> VIPTool.exe</span> <span class="term-text-dim">--inject --mode=ultra</span>`,d); d+=INC;
-        addLine(`<span class="term-text-dim">═══════════════════════════════</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">[SYS]</span> <span class="term-text-green">Khởi động hệ thống...</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">[SYS]</span> <span class="term-text-white">Platform: Android 14 · ARM64</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">[SYS]</span> <span class="term-text-white">Memory: 8GB · Free: 3.2GB</span>`,d); d+=INC;
-        addProgLine('prog-init','Khởi tạo kernel module...',d,d+150); d+=INC*2;
-        addLine(`<span class="term-prefix">[OK]</span> <span class="term-text-green">Module loaded thành công</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">[GUN]</span> <span class="term-text-yellow">Phát hiện danh sách vũ khí:</span>`,d); d+=INC;
-        addGunRow(GUNS.slice(0,5),d); d+=INC;
-        addGunRow(GUNS.slice(5,10),d); d+=INC;
-        addProgLine('prog-scan','Quét cấu hình recoil pattern...',d,d+180); d+=INC*2;
-        GUNS.forEach((g,i)=>{ addLine(`<span class="term-prefix">  ├─</span> <span class="term-gun-icon ${g.cls}">🔫 ${g.name}</span> <span class="term-text-dim">DMG:</span><span class="term-text-orange"> ${g.dmg}</span>  <span class="term-text-dim">SPD:</span><span class="term-text-cyan"> ${g.spd}</span>  <span class="term-text-dim">[${g.type}]</span>`,d+i*(INC*0.7)); });
-        d+=GUNS.length*(INC*0.7)+INC;
-        addProgLine('prog-patch','Patching recoil buffer...',d,d+200); d+=INC*2;
-        addLine(`<span class="term-prefix">[INJ]</span> <span class="term-text-yellow">Injecting aim patch...</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">[INJ]</span> <span class="term-text-white">Target: com.dts.freefireth</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">[INJ]</span> <span class="term-text-white">PID: 7142 · Thread hijack: </span><span class="term-text-green">SUCCESS</span>`,d); d+=INC;
-        addProgLine('prog-bypass','Bypass anti-cheat layer...',d,d+250); d+=INC*2.5;
-        addLine(`<span class="term-prefix">[SEC]</span> <span class="term-text-green">✓ Anti-detect shield: ACTIVE</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">[SEC]</span> <span class="term-text-green">✓ Signature spoof: PASSED</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">[SEC]</span> <span class="term-text-green">✓ Memory encryption: ON</span>`,d); d+=INC;
-        addProgLine('prog-apply','Áp dụng config tất cả vũ khí...',d,d+300); d+=INC*2.5;
-        addLine(`<span class="term-text-dim">─── KẾT QUẢ INJECT ───────────────</span>`,d); d+=INC;
-        GUNS.slice(0,6).forEach((g,i)=>{ addLine(`<span class="term-prefix">  ✓</span> <span class="term-gun-icon ${g.cls}">🔫 ${g.name}</span> <span class="term-text-green"> PATCHED</span>`,d+i*(INC*0.6)); });
-        d+=6*(INC*0.6)+INC;
-        addLine(`<span class="term-text-dim">──────────────────────────────────</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">[DONE]</span> <span class="term-text-green">✓ Tất cả module đã chạy thành công!</span>`,d); d+=INC;
-        addLine(`<span class="term-prefix">$</span><span class="term-text-dim"> _</span><span class="blink-cursor"></span>`,d); d+=INC;
-        mt(()=>{
-            moduleRunning=false; btn.classList.remove('running');
-            icon.className='fa-solid fa-rotate-right'; lbl.textContent='Chạy Lại';
-            showToast('Module đã hoàn thành!','fa-terminal','#00e5ff');
-        }, d);
-    }
-
-    function stopModule(){
-        clearMT(); moduleRunning=false;
-        document.getElementById('btn-run').classList.remove('running');
-        document.getElementById('run-icon').className='fa-solid fa-play';
-        document.getElementById('run-label').textContent='Chạy Module';
-        const out = document.getElementById('terminal-output');
-        const el  = document.createElement('div'); el.className='term-line';
-        el.innerHTML=`<span class="term-prefix">[STOP]</span> <span class="term-text-red">Module bị dừng bởi người dùng.</span>`;
-        out.appendChild(el); out.scrollTop=out.scrollHeight;
-        showToast('Module đã dừng','fa-circle-stop','#ff4444');
-    }
-
-    /* ════════════════════════════════════════════════
-       KHỞI ĐỘNG APP
-    ════════════════════════════════════════════════ */
-    window.addEventListener('load', async ()=>{
-        // Đợi Firebase init (tối đa 3 giây)
-        await new Promise(res => setTimeout(res, firebaseReady ? 800 : 1200));
-        await checkAutoLogin();
-
-        // Sau khi auto-login thành công, bắt đầu watcher
-        const savedKey = localStorage.getItem(LS_SAVED_KEY);
-        if (savedKey && document.getElementById('dashboard').classList.contains('active')) {
-            startKeyWatcher(savedKey);
+function startKeyWatcher(keyVal) {
+    if (!firebaseReady || !db) return;
+    stopKeyWatcher();
+    const keyRef = db.ref('keys/' + keyToPath(keyVal));
+    keyWatcher = keyRef.on('value', snap => {
+        if (!snap.exists()) {
+            stopKeyWatcher();
+            localStorage.removeItem(LS_SAVED_KEY);
+            localStorage.removeItem(LS_KEY_DATA);
+            showBlockedOverlay('Key đã bị xóa khỏi hệ thống!');
+            return;
+        }
+        const data = snap.val();
+        if (data.active === false) {
+            stopKeyWatcher();
+            showBlockedOverlay('Key của bạn đã bị vô hiệu hóa bởi admin!');
+            return;
+        }
+        if (data.expiresAt && Date.now() > data.expiresAt) {
+            stopKeyWatcher();
+            showBlockedOverlay(`Key hết hạn lúc: ${formatDate(data.expiresAt)}`);
+            return;
         }
     });
+}
 
-    </script>
+function stopKeyWatcher() {
+    if (keyWatcher && firebaseReady && db) {
+        const savedKey = localStorage.getItem(LS_SAVED_KEY);
+        if (savedKey) db.ref('keys/' + keyToPath(savedKey)).off('value', keyWatcher);
+        keyWatcher = null;
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   CARD TOGGLE
+═══════════════════════════════════════════════ */
+let mTimeout = null;
+
+function toggleCard(checkbox, cardId, name, iconClass) {
+    const card = document.getElementById(cardId);
+    const pill = document.getElementById(cardId.replace('card-','pill-'));
+    if (checkbox.checked) {
+        showActivationModal(name, iconClass, () => {
+            card.classList.add('on');
+            pill.textContent = 'ON';
+            showToast(`${name} đã kích hoạt!`, 'fa-circle-check', '#ff1a1a');
+        });
+    } else {
+        showDeactivateModal(name, iconClass, () => {
+            card.classList.remove('on');
+            pill.textContent = 'OFF';
+            showToast(`${name} đã tắt`, 'fa-circle-xmark', '#666');
+        });
+    }
+}
+
+function showActivationModal(name, iconClass, onDone) {
+    const ov    = document.getElementById('modal-overlay');
+    const box   = document.getElementById('modal-box');
+    const steps = document.querySelectorAll('.step-item');
+    box.classList.remove('deact');
+    document.getElementById('modal-icon').innerHTML  = `<i class="fa-solid ${iconClass}"></i>`;
+    document.getElementById('modal-title').textContent = 'Đang kích hoạt...';
+    document.getElementById('modal-sub').textContent   = name;
+    steps.forEach(s => s.classList.remove('done'));
+    ov.classList.add('show');
+    const d = 350;
+    steps.forEach((s, i) => setTimeout(() => s.classList.add('done'), d*(i+1)));
+    clearTimeout(mTimeout);
+    mTimeout = setTimeout(() => {
+        document.getElementById('modal-title').textContent = 'Kích hoạt thành công!';
+        setTimeout(() => { ov.classList.remove('show'); onDone(); }, 600);
+    }, d * steps.length + 400);
+}
+
+function showDeactivateModal(name, iconClass, onDone) {
+    const ov    = document.getElementById('modal-overlay');
+    const box   = document.getElementById('modal-box');
+    const steps = document.querySelectorAll('.step-item');
+    box.classList.add('deact');
+    document.getElementById('modal-icon').innerHTML  = `<i class="fa-solid ${iconClass}"></i>`;
+    document.getElementById('modal-title').textContent = 'Đang tắt...';
+    document.getElementById('modal-sub').textContent   = name;
+    steps.forEach(s => s.classList.remove('done'));
+    const labels = ['Dừng module...','Xóa cấu hình...','Khôi phục hệ thống...','Hoàn tất!'];
+    steps.forEach((s, i) => { s.childNodes[1].textContent = ' ' + labels[i]; });
+    ov.classList.add('show');
+    const d = 300;
+    steps.forEach((s, i) => setTimeout(() => s.classList.add('done'), d*(i+1)));
+    clearTimeout(mTimeout);
+    mTimeout = setTimeout(() => {
+        document.getElementById('modal-title').textContent = 'Đã tắt thành công!';
+        setTimeout(() => {
+            ov.classList.remove('show');
+            const orig = ['Khởi tạo module...','Nạp cấu hình...','Bypass bảo vệ...','Áp dụng hoàn tất!'];
+            steps.forEach((s, i) => { s.childNodes[1].textContent = ' ' + orig[i]; });
+            onDone();
+        }, 500);
+    }, d * steps.length + 350);
+}
+
+/* ═══════════════════════════════════════════════
+   MODULE RUNNER
+═══════════════════════════════════════════════ */
+let moduleRunning = false, moduleTimers = [];
+
+const GUNS = [
+    {name:'MP40',         cls:'red',    dmg:48,  spd:'★★★★★', type:'SMG'},
+    {name:'M4A1',         cls:'cyan',   dmg:56,  spd:'★★★★☆', type:'AR'},
+    {name:'AKM',          cls:'yellow', dmg:62,  spd:'★★★☆☆', type:'AR'},
+    {name:'AWM',          cls:'red',    dmg:105, spd:'★☆☆☆☆', type:'Sniper'},
+    {name:'SCAR-L',       cls:'cyan',   dmg:53,  spd:'★★★★☆', type:'AR'},
+    {name:'UMP45',        cls:'green',  dmg:44,  spd:'★★★★★', type:'SMG'},
+    {name:'Desert Eagle', cls:'yellow', dmg:71,  spd:'★★★☆☆', type:'Pistol'},
+    {name:'M24',          cls:'red',    dmg:88,  spd:'★★☆☆☆', type:'Sniper'},
+    {name:'P90',          cls:'green',  dmg:40,  spd:'★★★★★', type:'SMG'},
+    {name:'Kar98k',       cls:'yellow', dmg:94,  spd:'★★☆☆☆', type:'Sniper'},
+];
+
+function clearMT() { moduleTimers.forEach(t => clearTimeout(t)); moduleTimers = []; }
+function mt(fn, ms) { const id = setTimeout(fn, ms); moduleTimers.push(id); }
+
+function addLine(html, delay) {
+    mt(() => {
+        const out = document.getElementById('terminal-output');
+        const el  = document.createElement('div'); el.className = 'term-line'; el.innerHTML = html;
+        out.appendChild(el); out.scrollTop = out.scrollHeight;
+    }, delay);
+}
+
+function addProgLine(id, label, delay, fillDelay) {
+    mt(() => {
+        const out  = document.getElementById('terminal-output');
+        const wrap = document.createElement('div'); wrap.className = 'term-progress-wrap';
+        wrap.innerHTML = `<div class="term-line"><span class="term-prefix">▶</span> <span class="term-text-cyan">${label}</span></div><div class="term-progress-bar"><div class="term-progress-fill" id="${id}"></div></div>`;
+        out.appendChild(wrap); out.scrollTop = out.scrollHeight;
+    }, delay);
+    mt(() => { const b = document.getElementById(id); if(b) b.style.width = '100%'; }, fillDelay);
+}
+
+function addGunRow(guns, delay) {
+    mt(() => {
+        const out = document.getElementById('terminal-output');
+        const row = document.createElement('div'); row.className = 'term-gun-row';
+        guns.forEach(g => { row.innerHTML += `<span class="term-gun-icon ${g.cls}">🔫 ${g.name}</span>`; });
+        out.appendChild(row); out.scrollTop = out.scrollHeight;
+    }, delay);
+}
+
+function runModule() {
+    if (moduleRunning) { stopModule(); return; }
+    moduleRunning = true;
+    const btn  = document.getElementById('btn-run');
+    const icon = document.getElementById('run-icon');
+    const lbl  = document.getElementById('run-label');
+    const tBox = document.getElementById('terminal-box');
+    const tOut = document.getElementById('terminal-output');
+    btn.classList.add('running');
+    icon.className = 'fa-solid fa-stop';
+    lbl.textContent = 'Dừng Module';
+    tBox.classList.add('open');
+    tOut.innerHTML = '';
+
+    let d = 0; const INC = 220;
+    addLine(`<span class="term-prefix">$</span><span class="term-text-cyan"> VIPTool.exe</span> <span class="term-text-dim">--inject --mode=ultra</span>`, d); d += INC;
+    addLine(`<span class="term-text-dim">═══════════════════════════════</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">[SYS]</span> <span class="term-text-green">Khởi động hệ thống...</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">[SYS]</span> <span class="term-text-white">Platform: Android 14 · ARM64</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">[SYS]</span> <span class="term-text-white">Memory: 8GB · Free: 3.2GB</span>`, d); d += INC;
+    addProgLine('prog-init', 'Khởi tạo kernel module...', d, d+150); d += INC*2;
+    addLine(`<span class="term-prefix">[OK]</span> <span class="term-text-green">Module loaded thành công</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">[GUN]</span> <span class="term-text-yellow">Phát hiện danh sách vũ khí:</span>`, d); d += INC;
+    addGunRow(GUNS.slice(0,5), d); d += INC;
+    addGunRow(GUNS.slice(5,10), d); d += INC;
+    addProgLine('prog-scan', 'Quét cấu hình recoil pattern...', d, d+180); d += INC*2;
+    GUNS.forEach((g,i) => { addLine(`<span class="term-prefix">  ├─</span> <span class="term-gun-icon ${g.cls}">🔫 ${g.name}</span> <span class="term-text-dim">DMG:</span><span class="term-text-orange"> ${g.dmg}</span>  <span class="term-text-dim">SPD:</span><span class="term-text-cyan"> ${g.spd}</span>  <span class="term-text-dim">[${g.type}]</span>`, d+i*(INC*0.7)); });
+    d += GUNS.length*(INC*0.7)+INC;
+    addProgLine('prog-patch', 'Patching recoil buffer...', d, d+200); d += INC*2;
+    addLine(`<span class="term-prefix">[INJ]</span> <span class="term-text-yellow">Injecting aim patch...</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">[INJ]</span> <span class="term-text-white">Target: com.dts.freefireth</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">[INJ]</span> <span class="term-text-white">PID: 7142 · Thread hijack: </span><span class="term-text-green">SUCCESS</span>`, d); d += INC;
+    addProgLine('prog-bypass', 'Bypass anti-cheat layer...', d, d+250); d += INC*2.5;
+    addLine(`<span class="term-prefix">[SEC]</span> <span class="term-text-green">✓ Anti-detect shield: ACTIVE</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">[SEC]</span> <span class="term-text-green">✓ Signature spoof: PASSED</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">[SEC]</span> <span class="term-text-green">✓ Memory encryption: ON</span>`, d); d += INC;
+    addProgLine('prog-apply', 'Áp dụng config tất cả vũ khí...', d, d+300); d += INC*2.5;
+    addLine(`<span class="term-text-dim">─── KẾT QUẢ INJECT ───────────────</span>`, d); d += INC;
+    GUNS.slice(0,6).forEach((g,i) => { addLine(`<span class="term-prefix">  ✓</span> <span class="term-gun-icon ${g.cls}">🔫 ${g.name}</span> <span class="term-text-green"> PATCHED</span>`, d+i*(INC*0.6)); });
+    d += 6*(INC*0.6)+INC;
+    addLine(`<span class="term-text-dim">──────────────────────────────────</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">[DONE]</span> <span class="term-text-green">✓ Tất cả module đã chạy thành công!</span>`, d); d += INC;
+    addLine(`<span class="term-prefix">$</span><span class="term-text-dim"> _</span><span class="blink-cursor"></span>`, d); d += INC;
+    mt(() => {
+        moduleRunning = false;
+        btn.classList.remove('running');
+        icon.className = 'fa-solid fa-rotate-right';
+        lbl.textContent = 'Chạy Lại';
+        showToast('Module đã hoàn thành!', 'fa-terminal', '#00e5ff');
+    }, d);
+}
+
+function stopModule() {
+    clearMT(); moduleRunning = false;
+    document.getElementById('btn-run').classList.remove('running');
+    document.getElementById('run-icon').className = 'fa-solid fa-play';
+    document.getElementById('run-label').textContent = 'Chạy Module';
+    const out = document.getElementById('terminal-output');
+    const el  = document.createElement('div'); el.className = 'term-line';
+    el.innerHTML = `<span class="term-prefix">[STOP]</span> <span class="term-text-red">Module bị dừng bởi người dùng.</span>`;
+    out.appendChild(el); out.scrollTop = out.scrollHeight;
+    showToast('Module đã dừng', 'fa-circle-stop', '#ff4444');
+}
+
+/* ═══════════════════════════════════════════════
+   
+═══════════════════════════════════════════════ */
+window.addEventListener('load', async () => {
+    await new Promise(res => setTimeout(res, firebaseReady ? 800 : 1200));
+    await checkAutoLogin();
+
+    const savedKey = localStorage.getItem(LS_SAVED_KEY);
+    if (savedKey && document.getElementById('dashboard').classList.contains('active')) {
+        startKeyWatcher(savedKey);
+    }
+
+    // Hiện welcome modal sau 1 giây nếu chưa đăng nhập
+    if (!savedKey || !document.getElementById('dashboard').classList.contains('active')) {
+        setTimeout(() => {
+            const ov = document.getElementById('welcome-overlay');
+            ov.style.display = 'flex';
+            startWelcomeTimer();
+        }, 1000);
+    }
+});
+</script>
 </body>
 </html>
